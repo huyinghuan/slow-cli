@@ -1,0 +1,39 @@
+{
+  "name": "slow-cli",
+  "version": "0.0.1",
+  "description": "a web javascript framework",
+  "author": "huyinghuan",
+  "homepage": "https://github.com/huyinghuan/slow-cli",
+  "keywords": ["slow-cli", "slow"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/huyinghuan/slow-cli.git"
+  },
+  "bugs":{
+    "url": "https://github.com/huyinghuan/slow-cli/issues",
+    "email": "ec.huyinghuan@gmail.com"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://gist.githubusercontent.com/huyinghuan/a03ffed8877dc6822275/raw/4a78514616df437e15daa5a010ade50f5e882e7c/LICENSE"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "bin": {
+    "slow": "./bin/index.js"
+  },
+  "devDependencies":{
+    "coffee-script":""
+  },
+  "dependencies": {
+    "log4slow":"",
+    "commander":""
+  },
+  "scripts": {
+    "prepublish": "coffee -o ./ -c src/",
+    "prestart": "coffee -o ./ -c src/",
+    "pretest": "coffee -o ./ -c src",
+    "test": "node ./bin/index.js slow"
+  }
+}
