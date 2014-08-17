@@ -28,12 +28,13 @@
   },
   "dependencies": {
     "log4slow":"",
-    "commander":""
+    "commander":"",
+    "fs-extra": ""
   },
   "scripts": {
     "prepublish": "coffee -o ./ -c src/",
     "prestart": "coffee -o ./ -c src/",
     "pretest": "coffee -o ./ -c src",
-    "test": "node ./bin/index.js slow"
+    "test": "echo 123"
   }
 }
