@@ -15,11 +15,11 @@ module.exports = ->
   #初始化
   if _program.init
     sample = _path.join __dirname, '..', 'sample'
-    _fs.copySync sample, _path.join current, identity
+    _fs.copySync sample, _path.join current
     process.exit 1
 
-  config = require _path.join current, identity, "config.json"
-
+  config = require _path.join current, identity, "config"
+  console.log 'config', config
   global.SLOW = {}
 
   global.SLOW.port = _program.port or config.port
