@@ -19,18 +19,9 @@ module.exports = ->
     process.exit 1
 
   config = require _path.join current, identity, "config"
-  console.log 'config', config
   global.SLOW = {}
 
   global.SLOW.port = _program.port or config.port
 
   #启动Slow
   require '../lib/app'
-
-
-
-
-
-
-
-  console.log 2
