@@ -4,12 +4,15 @@
   "description": "a web javascript framework",
   "author": "huyinghuan",
   "homepage": "https://github.com/huyinghuan/slow-cli",
-  "keywords": ["slow-cli", "slow"],
+  "keywords": [
+    "slow-cli",
+    "slow"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/huyinghuan/slow-cli.git"
   },
-  "bugs":{
+  "bugs": {
     "url": "https://github.com/huyinghuan/slow-cli/issues",
     "email": "ec.huyinghuan@gmail.com"
   },
@@ -23,12 +26,15 @@
   "bin": {
     "slow": "./bin/index.js"
   },
-  "devDependencies":{
-    "coffee-script":""
+  "devDependencies": {
+    "coffee-script": "",
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.11.1",
+    "grunt-contrib-watch": "^0.6.1"
   },
   "dependencies": {
-    "log4slow":"0.0.5",
-    "commander":"",
+    "log4slow": "0.0.5",
+    "commander": "",
     "fs-extra": ""
   },
   "scripts": {

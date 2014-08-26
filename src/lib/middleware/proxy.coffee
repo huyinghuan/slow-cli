@@ -1,3 +1,3 @@
 module.exports = (rep, resp, next)->
   console.log 'proxy'
-  next()
+  resp.end 'hello2'

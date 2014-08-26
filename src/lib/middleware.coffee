@@ -18,8 +18,6 @@ scanMiddleware()
 getMiddleware = ->
   wares
 
-
-
 Middleware = module.exports = {}
 
 Middleware.add = (ware)->
