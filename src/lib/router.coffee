@@ -6,7 +6,7 @@ module.exports =  (req, resp, next)->
   req.beginTime = new Date().getTime()
   url = new URLExtra req
   pathName = url.getPathName()
-  console.log req.headers
+  #console.log req.headers
   #resp.end 'hello'
   #....
   next()
