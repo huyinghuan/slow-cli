@@ -34,7 +34,7 @@
     "request": "^2.40.0"
   },
   "dependencies": {
-    "log4slow": "0.0.5",
+    "log4slow": "0.0.9",
     "commander": "",
     "fs-extra": ""
   },
