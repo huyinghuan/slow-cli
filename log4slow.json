@@ -2,6 +2,9 @@
   "log2console": true,
   "timestamp": "YYYY-MM-DD HH:mm:ss",
   "levelShow": true,
-  "lineInfo": true,
+  "lineInfo": {
+    "debug": true,
+    "error": true
+  },
   "log2file": false
 }

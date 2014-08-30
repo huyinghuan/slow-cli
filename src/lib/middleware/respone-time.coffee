@@ -6,5 +6,5 @@ module.exports = (req, resp, next)->
   pathName = new URLExtra(req).getPathName()
   resp.on 'finish', ()->
     spellTime = new Date().getTime() - startTime
-    console.log "#{pathName}:#{spellTime} ms"
+    Log.info "path ( #{pathName} ):#{spellTime} ms"
   next()

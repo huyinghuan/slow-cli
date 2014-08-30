@@ -34,7 +34,7 @@ initMiddlewareStack()
 
 #获取中间件队列
 getMiddleware = ->
-  wares
+  wares.concat []
 
 Middleware = module.exports = {}
 
