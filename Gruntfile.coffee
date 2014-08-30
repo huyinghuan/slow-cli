@@ -12,6 +12,12 @@ module.exports = (grunt)->
       console.log body
   )
 
+  _fs = require 'fs'
+  grunt.registerTask('fs-test', 'test fs', ()->
+    console.log _fs.existsSync('.slow')
+    console.log _fs.existsSync('sample/.slow')
+  )
+
   grunt.initConfig(
     pkg: grunt.file.readJSON 'package.json'
     coffee:
