@@ -2,7 +2,7 @@ _program =  require 'commander'
 _path = require 'path'
 _fse = require 'fs-extra'
 _fs = require 'fs'
-
+Log = require 'log4slow'
 identity = '.slow'
 
 module.exports = ->
@@ -23,15 +23,19 @@ module.exports = ->
   #如果是在目录下正常运行slow
   #1. 判断是否存在.slow目录
   if not _fs.existsSync _path.join(current, identity)
-    console.warn "you do not init slow. please run slow init in the project directory."
+    Log.warn "you do not init slow. please run slow init in the project directory."
     current =  _path.join(__dirname, '..', 'sample')
-    console.log "slow run defalut sample in #{current}"
+    Log.info "slow run defalut sample in #{current}"
 
   #获取slow的配置
   config = require _path.join current, identity, "config"
-  global.SLOW = {}
-
-  global.SLOW.port = _program.port or config.port
+  slow = global.SLOW = {}
+  #挂上端口
+  slow.port = _program.port or config.port
+  #挂上当前运行目录
+  slow.cwd = current
+  #挂上基本设置
+  slow.base = config.base
 
   #启动Slow
   require '../lib/app'

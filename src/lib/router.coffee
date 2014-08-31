@@ -1,12 +1,10 @@
 URLExtra = require './utils/url-extra'
-_fileType = require './utils/file-type'
 
 module.exports =  (req, resp, next)->
   url = new URLExtra req
   pathName = url.getPathName()
-  #console.log req.headers
-  #resp.end 'hello'
-  #....
+  req.client = {}
+  #是否访问默认路径 /
+  req.client.pathName = if pathName is '/' then SLOW.base.index else pathName
+
   next()
-
-

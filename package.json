@@ -34,9 +34,10 @@
     "request": "^2.40.0"
   },
   "dependencies": {
-    "log4slow": "0.1.0",
     "commander": "",
-    "fs-extra": ""
+    "fs-extra": "",
+    "log4slow": "0.1.0",
+    "mime": "^1.2.11"
   },
   "scripts": {
     "prepublish": "coffee -o ./ -c src/",

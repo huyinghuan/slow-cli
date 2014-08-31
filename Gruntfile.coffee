@@ -25,11 +25,11 @@ module.exports = (grunt)->
         expand: true
         flatten: false
         cwd: 'src'
-        src: ['*/*.coffee', '*/*/*.coffee', '*/*/*/*.coffee']
+        src: ['*/*.coffee', '*/*/*.coffee', '*/*/*/*.coffee', 'sample/.slow/config.coffee']
         dest: '.'
         ext: '.js'
     watch:
-      files: ['src/*.coffee', 'src/*/*.coffee', 'src/*/*/*.coffee']
+      files: ['src/*.coffee', 'src/*/*.coffee', 'src/*/*/*.coffee', 'src/sample/.slow/*.coffee']
       tasks: ['coffee:dev']
   )
 

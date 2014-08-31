@@ -2,7 +2,6 @@ _fs = require 'fs'
 _path = require 'path'
 
 _router = require './router'
-_firstest = require './middleware/special/firstest'
 
 wares = []
 
@@ -10,9 +9,9 @@ addMiddleware = (ware)->
   wares.push ware
 
 #扫描中间件
-scanMiddleware = ->
+scanMiddleware = (middleDirector)->
   #获取中间件目录
-  dir = _path.join __dirname, 'middleware'
+  dir = _path.join __dirname, middleDirector
   files = _fs.readdirSync dir
   for file in files
     filepath = _path.join(dir, file)
@@ -23,11 +22,11 @@ scanMiddleware = ->
 #最先执行的中间件
 scanHeadMiddleware = ->
   addMiddleware _router
-  addMiddleware _firstest
 
 #初始化中间件队列
 initMiddlewareStack = ()->
-  scanMiddleware()
+  scanMiddleware('middleware')
+  scanMiddleware('middleware/start')
   scanHeadMiddleware()
 
 initMiddlewareStack()
