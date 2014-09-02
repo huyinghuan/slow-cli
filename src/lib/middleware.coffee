@@ -25,8 +25,10 @@ scanHeadMiddleware = ->
 
 #初始化中间件队列
 initMiddlewareStack = ()->
-  scanMiddleware('middleware')
-  scanMiddleware('middleware/start')
+  scanMiddleware 'middleware/error'
+  scanMiddleware 'middleware/end'
+  scanMiddleware 'middleware'
+  scanMiddleware 'middleware/start'
   scanHeadMiddleware()
 
 initMiddlewareStack()

@@ -21,5 +21,19 @@ module.exports = (req, resp, next)->
     fileStream.on 'end', ()->
       resp.end()
 
+  #服务器内部错误
+  throwsServerError = ()->
+    resp.statusCode = 500
+    resp.end('Server has crash！')
+
+  #发送文本信息
+  sendContent = (content, type = "text/plain")->
+    resp.setHeader "Content-Type", type
+    resp.statusCode = 200
+    resp.write content, 'utf8'
+    resp.end()
+
   resp.sendFile = sendFile
+  resp.throwsServerError = throwsServerError
+  resp.sendContent = sendContent
   next()
