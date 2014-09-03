@@ -34,4 +34,15 @@ module.exports = (grunt)->
   )
 
 
+  grunt.registerTask('complie', '测试编译coffeescript', ()->
+    this.async()
+    fs = require 'fs'
+    coffee = require 'coffee-script'
+    fs.readFile 'grunt-test/compile.coffee', 'utf8', (err, data) ->
+      compiled = coffee.compile data
+      fs.writeFile 'grunt-test/source.js', compiled, (err) ->
+        console.log "Done."
+  )
+
+
 

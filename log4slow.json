@@ -1,10 +1,7 @@
 {
   "log2console": true,
-  "timestamp": "YYYY-MM-DD HH:mm:ss",
+  "timestamp": false,
   "levelShow": true,
-  "lineInfo": {
-    "debug": true,
-    "error": true
-  },
+  "lineInfo": true,
   "log2file": false
 }

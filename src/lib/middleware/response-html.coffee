@@ -34,8 +34,7 @@ module.exports = (req, resp, next)->
    #文件编译
   queue.push (content, cb)->
     template = _Handlebars.compile content
-    data = {name: 'hello hbs'}
-    cb null, template(data)
+    cb null, template({})
 
   #请求响应
   _async.waterfall queue, (err, result)->

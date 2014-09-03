@@ -33,7 +33,12 @@ module.exports = (req, resp, next)->
     resp.write content, 'utf8'
     resp.end()
 
+  #设置缓存
+  doCache = ()->
+    resp.setHeader('Cache-Control', "public, max-age=#{SLOW.base['cache-time']}")
+    resp.setHeader('Expires', new Date(new Date().getTime() + SLOW.base['cache-time'] * 1000))
   resp.sendFile = sendFile
   resp.throwsServerError = throwsServerError
   resp.sendContent = sendContent
+  resp.doCache = doCache
   next()

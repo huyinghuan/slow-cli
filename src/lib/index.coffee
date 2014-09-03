@@ -36,6 +36,9 @@ module.exports = ->
   slow.cwd = current
   #挂上基本设置
   slow.base = config.base
+  #开发模式
+  slow.env = config.environment
+
 
   #启动Slow
   require '../lib/app'
