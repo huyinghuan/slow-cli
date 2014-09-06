@@ -8,8 +8,4 @@ lib
 
 .idea
 
-sample
-
 !/src/lib
-
-!/src/sample
