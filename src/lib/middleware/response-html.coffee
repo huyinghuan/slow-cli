@@ -17,9 +17,7 @@ module.exports = (req, resp, next)->
 
   if not flag
     #如果文件不存在，替换成模板元素继续尝试
-    pathArray = filePath.split('.')
-    pathArray[pathArray.length - 1] = 'hbs'
-    filePath = pathArray.join('.')
+    filePath = filePath.replace(/(\.html)$/, '.hbs')
     #如果hbs也不存在
     return next() if not _fs.existsSync filePath
 

@@ -19,9 +19,7 @@ module.exports = (req, resp, next)->
   return resp.sendFile filePath if flag
 
   #如果文件不存在，替换成less继续尝试
-  pathArray = filePath.split('.')
-  pathArray[pathArray.length - 1] = 'less'
-  filePath = pathArray.join('.')
+  filePath = filePath.replace(/(\.css)$/, '.less')
 
   #如果 coffee 也不存在
   next() if not _fs.existsSync filePath

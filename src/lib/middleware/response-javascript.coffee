@@ -22,9 +22,7 @@ module.exports = (req, resp, next)->
   return resp.sendFile filePath if flag
 
   #如果文件不存在，替换成coffee继续尝试
-  pathArray = filePath.split('.')
-  pathArray[pathArray.length - 1] = 'coffee'
-  filePath = pathArray.join('.')
+  filePath = filePath.replace(/(\.js)$/, '.coffee')
 
   #如果 coffee 也不存在
   next() if not _fs.existsSync filePath
