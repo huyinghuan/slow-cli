@@ -3,8 +3,9 @@
 ###
 _path = require 'path'
 _mime = require 'mime'
+_chokidar = require 'chokidar'
 _isGzip = SLOW.base.gzip
-
+_isWatch = SLOW.base.isWatchFile
 File = module.exports = {}
 
 compressibleQueue = []
@@ -24,3 +25,19 @@ File.compressible = (fileMime)->
   return false if not _isGzip
   return true for mime in compressibleQueue when fileMime is mime
   return false
+
+File.watch  = (cb)->
+  return if not _isWatch
+  console.log 'watch file is working...'
+  #watch file
+  options =
+    ignored: /[\/\\]\./
+    persistent: true
+  cwd = SLOW.cwd
+  watcher = _chokidar.watch(cwd, options)
+
+  cb((socket)->
+    watcher.on('change', (path)->
+      socket.emit('file-change')
+    )
+  )

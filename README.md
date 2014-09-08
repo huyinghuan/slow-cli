@@ -22,7 +22,7 @@ undone
 
 ### 5. support file watch
 
-undone
+done
 
 ### 6. support gzip
 

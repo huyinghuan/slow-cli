@@ -5,7 +5,8 @@ module.exports =
     "base": #基本配置
       "index": "index.html" #默认首页
       "cache-time": 60 * 60 * 24 * 7 #缓存时间
-      "gzip": true
+      "gzip": true #是否gzip资源文件
+      "isWatchFile": true #是否监控文件变化刷新文件
     "proxy": #代理配置
       "path": "/api"
       "redirect": "http://localhost:8001"

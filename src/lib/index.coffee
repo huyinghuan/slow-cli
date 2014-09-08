@@ -29,6 +29,7 @@ module.exports = ->
 
   #获取slow的配置
   config = require _path.join current, identity, "config"
+
   #开发模式 or 生产模式?
   env = config.environment
 
