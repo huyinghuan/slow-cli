@@ -1,17 +1,35 @@
 (function() {
   module.exports = {
     "environment": "develop",
-    "port": 3000,
-    "base": {
-      "index": "index.html",
-      "cache-time": 60 * 60 * 24 * 7
+    "develop": {
+      "port": 3000,
+      "base": {
+        "index": "index.html",
+        "cache-time": 60 * 60 * 24 * 7,
+        "gzip": true
+      },
+      "proxy": {
+        "path": "/api",
+        "redirect": "http://localhost:8001"
+      },
+      "error": {
+        "403": ''
+      }
     },
-    "proxy": {
-      "path": "/api",
-      "redirect": "http://localhost:8001"
-    },
-    "error": {
-      "403": ''
+    "product": {
+      "port": 3000,
+      "base": {
+        "index": "index.html",
+        "cache-time": 60 * 60 * 24 * 7,
+        "gzip": true
+      },
+      "proxy": {
+        "path": "/api",
+        "redirect": "http://localhost:8001"
+      },
+      "error": {
+        "403": ''
+      }
     }
   };
 

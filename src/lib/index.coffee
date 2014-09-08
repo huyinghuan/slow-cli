@@ -29,6 +29,12 @@ module.exports = ->
 
   #获取slow的配置
   config = require _path.join current, identity, "config"
+  #开发模式 or 生产模式?
+  env = config.environment
+
+  #读取相应的配置
+  config = config[env]
+
   slow = global.SLOW = {}
   #挂上端口
   slow.port = _program.port or config.port
@@ -36,8 +42,8 @@ module.exports = ->
   slow.cwd = current
   #挂上基本设置
   slow.base = config.base
-  #开发模式
-  slow.env = config.environment
+
+  slow.env = env
 
 
   #启动Slow
