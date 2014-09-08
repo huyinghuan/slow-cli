@@ -10,14 +10,18 @@ server = _http.createServer(
     _middleware.next(req, res)
 )
 
-_io = require('socket.io')(server)
+#初始化文件监控
+initWatchFile = ()->
+  _io = require('socket.io')(server)
+  _utils_file.watch (cb)->
+    _io.on('connection', (socket)->
+      # monitor files change
+      cb socket
+    )
 
-
-_utils_file.watch (cb)->
-  _io.on('connection', (socket)->
-    # monitor files change
-    cb socket
-  )
+#生产环境中不建设文件变化
+if not SLOW.isProduct()
+  initWatchFile()
 
 
 server.listen port

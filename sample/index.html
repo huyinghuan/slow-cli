@@ -8,16 +8,9 @@
   <link href="css/less.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-Hello world!!
+Hello world!! test
 <img src="img/1.png" style="width: 100px; height: 100px">
 <script src="lib/hello.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io('http://localhost:3000');
-  socket.on('file-change', function (data) {
-    window.location.reload()
-  });
-
-</script>
+{{watch_file}}
 </body>
 </html>

@@ -22,7 +22,8 @@
       "base": {
         "index": "index.html",
         "cache-time": 60 * 60 * 24 * 7,
-        "gzip": true
+        "gzip": true,
+        "isWatchFile": true
       },
       "proxy": {
         "path": "/api",

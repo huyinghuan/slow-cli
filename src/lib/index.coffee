@@ -6,10 +6,13 @@ Log = require 'log4slow'
 identity = '.slow'
 
 module.exports = ->
-  version =  _path.join __dirname, '..', 'package.json'
+  pkg =  _path.join __dirname, '..', 'package.json'
+  version = require(pkg).version
+
   _program.version(version)
           .option('init', 'init a slow project')
           .option('-p, --port <n>', 'slow run in port <n>')
+          .option('-e, --env [value]', 'the environment that slow working, develop or product')
           .parse(process.argv);
 
   current = process.cwd()
@@ -31,7 +34,7 @@ module.exports = ->
   config = require _path.join current, identity, "config"
 
   #开发模式 or 生产模式?
-  env = config.environment
+  env = _program.env or config.environment
 
   #读取相应的配置
   config = config[env]
@@ -46,6 +49,8 @@ module.exports = ->
 
   slow.env = env
 
+  slow.isProduct = ()->
+    env is 'product'
 
   #启动Slow
   require '../lib/app'

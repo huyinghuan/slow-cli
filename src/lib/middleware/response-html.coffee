@@ -4,8 +4,8 @@
 _mime = require 'mime'
 _utils_file = require '../utils/file'
 _fs = require 'fs'
-_Handlebars = require 'handlebars'
-_async = require 'async'
+_utils_handlebar = require '../utils/handlebar'
+
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
   mime  = _mime.lookup(pathName)
@@ -14,30 +14,17 @@ module.exports = (req, resp, next)->
   filePath = _utils_file.getFilePath pathName
   #判断文件是否存在
   flag = _fs.existsSync filePath
-  #文件存在直接输出文件
-  return resp.sendFile filePath if flag
 
-  #如果文件不存在，替换成模板元素继续尝试
-  pathArray = filePath.split('.')
-  pathArray[pathArray.length - 1] = 'hbs'
-  filePath = pathArray.join('.')
-  #如果hbs也不存在
-  next() if not _fs.existsSync filePath
+  if not flag
+    #如果文件不存在，替换成模板元素继续尝试
+    pathArray = filePath.split('.')
+    pathArray[pathArray.length - 1] = 'hbs'
+    filePath = pathArray.join('.')
+    #如果hbs也不存在
+    return next() if not _fs.existsSync filePath
 
-  queue = []
-
-  #读取文件
-  queue.push (cb)->
-    _fs.readFile filePath, encoding: 'utf8', (err, data)->
-      cb err, data
-
-   #文件编译
-  queue.push (content, cb)->
-    template = _Handlebars.compile content
-    cb null, template({})
-
-  #请求响应
-  _async.waterfall queue, (err, result)->
+  _utils_handlebar.compileFile filePath, (err, content)->
     return resp.throwsServerError() if err
-    resp.sendContent result, mime
+    resp.sendContent content, mime
+
 
