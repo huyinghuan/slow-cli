@@ -24,6 +24,7 @@ compileFile = (filePath, cb)->
   #请求响应
   _async.waterfall queue, cb
 
+#编译文件 同步
 compileFileSync = (filePath, context = WebGlobal)->
   html = _fs.readFileSync filePath, 'utf8'
   template = _Handlebars.compile html
@@ -42,7 +43,7 @@ _Handlebars.registerHelper 'watch_file', ()->
   return '' if SLOW.isProduct()
   getTemplateContent "watch-file"
 
-#文件引用
+#html 文件引用
 _Handlebars.registerHelper 'import', (filePath)->
   origin_path = filePath
   filePath = _util_file.getFilePath filePath
@@ -60,6 +61,10 @@ _Handlebars.registerHelper 'import', (filePath)->
 
   html = compileFileSync filePath
   return new _Handlebars.SafeString html
+
+#js, css文件引用
+_Handlebars.registerHelper 'include', (files)->
+  files = [].concat(files)
 
 #handlebar 自定义工具
 Handlebar = module.exports = {}
