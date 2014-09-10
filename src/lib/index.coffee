@@ -18,8 +18,8 @@ module.exports = ->
   current = process.cwd()
   #如果是slow 初始化
   if _program.init
-    sample = _path.join __dirname, '..', 'sample'
-    _fse.copySync sample, _path.join current
+    sample = _path.join __dirname, '..', 'sample', identity
+    _fse.copySync sample, _path.join current, identity
     process.exit 1
 
 
