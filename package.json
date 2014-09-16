@@ -38,6 +38,7 @@
     "coffee-script": "",
     "commander": "",
     "fs-extra": "",
+    "glob": "^4.0.5",
     "handlebars": "^2.0.0-beta.1",
     "http-proxy": "^1.3.0",
     "less": "^1.7.5",

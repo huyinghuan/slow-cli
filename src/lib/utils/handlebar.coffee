@@ -3,7 +3,8 @@ _Handlebars = require 'handlebars'
 _async = require 'async'
 _path = require 'path'
 _util_file = require './file'
-
+_glob = require 'glob'
+_tag = require './html-tag'
 #定义前端的全局变量
 WebGlobal = {}
 
@@ -37,6 +38,9 @@ getTemplateContent = (fileName, context = {})->
   html = compileFileSync filePath, context
   return new _Handlebars.SafeString html
 
+
+#
+
 #文件监视器
 _Handlebars.registerHelper 'watch_file', ()->
   #如果是生产环境则返回空
@@ -64,7 +68,9 @@ _Handlebars.registerHelper 'import', (filePath)->
 
 #js, css文件引用
 _Handlebars.registerHelper 'include', (files)->
-  files = [].concat(files)
+  arr = _glob.sync files, cwd: _util_file.cwd()
+  tags = _tag.generateTags arr
+  return new _Handlebars.SafeString tags
 
 #handlebar 自定义工具
 Handlebar = module.exports = {}

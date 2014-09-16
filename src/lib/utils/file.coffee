@@ -41,3 +41,6 @@ File.watch  = (cb)->
       socket.emit('file-change')
     )
   )
+
+File.cwd = ()->
+  SLOW.cwd

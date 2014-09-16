@@ -6,15 +6,18 @@ A web develop framwork.
 
 ### 1. support less
 
-done
+Done
 
 ### 2. support coffee-script
  
-done
+Done
 
 ### 3. support handlebar
+Done.
 
-done
+#### 3.1 support import directive
+
+#### 3.2 support include directive
 
 ### 4. support http-proxy
 
@@ -22,11 +25,12 @@ undone
 
 ### 5. support file watch
 
-done
+Done
 
 ### 6. support gzip
 
-done
+Done
+
 
 ## LICENCE
 
