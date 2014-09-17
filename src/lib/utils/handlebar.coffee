@@ -8,19 +8,25 @@ _tag = require './html-tag'
 #定义前端的全局变量
 WebGlobal = {}
 
+isNeedCompile = (filePath)->
+  not /(\.html)$/.test filePath
+
+
 #编译文件 异步
 compileFile = (filePath, cb)->
-  queue = []
 
+  queue = []
   #读取文件
-  queue.push (cb)->
+  queue.push (next)->
     _fs.readFile filePath, encoding: 'utf8', (err, data)->
-      cb err, data
+      next err, data
 
   #文件编译
-  queue.push (content, cb)->
+  queue.push (content, next)->
+    #文件是否需要经过handlebar编译
+    return next null, content if not isNeedCompile filePath
     template = _Handlebars.compile content
-    cb null, template(WebGlobal)
+    next null, template(WebGlobal)
 
   #请求响应
   _async.waterfall queue, cb
@@ -28,7 +34,7 @@ compileFile = (filePath, cb)->
 #编译文件 同步
 compileFileSync = (filePath, context = WebGlobal)->
   html = _fs.readFileSync filePath, 'utf8'
-  return html if /(\.html)$/.test filePath #如果是html文件则不进行编译
+  return html if not isNeedCompile filePath
   template = _Handlebars.compile html
   template(context)
 

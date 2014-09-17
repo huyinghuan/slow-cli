@@ -51,6 +51,10 @@ Done
   MIT
 
 ## History
+v0.1.3
+
+1. fix some bugs.
+
 v0.1.1
 
 1. update README.md and fix bug can not install 
