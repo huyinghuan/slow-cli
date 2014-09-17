@@ -28,6 +28,7 @@ compileFile = (filePath, cb)->
 #编译文件 同步
 compileFileSync = (filePath, context = WebGlobal)->
   html = _fs.readFileSync filePath, 'utf8'
+  return html if /(\.html)$/.test filePath #如果是html文件则不进行编译
   template = _Handlebars.compile html
   template(context)
 

@@ -2,7 +2,7 @@ Tag = module.exports = {}
 
 #生成js标签
 generateScriptTag = (src)->
-  src = src.replace /(\.coffee)$/, '.coffee'
+  src = src.replace /(\.coffee)$/, '.js'
   "<script src='#{src}'></script>"
 
 #生成css标签
