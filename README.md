@@ -35,3 +35,9 @@ Done
 ## LICENCE
 
   MIT
+
+## History
+
+v0.1.0
+
+1. finish basic function
