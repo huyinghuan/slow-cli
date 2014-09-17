@@ -4,8 +4,6 @@ logs
 
 node_modules
 
-lib
-
 .idea
 
 !/src/lib

@@ -1,0 +1,7 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io(window.location.origin);
+  socket.on('file-change', function (data) {
+    window.location.reload()
+  });
+</script>
