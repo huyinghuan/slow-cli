@@ -21,7 +21,7 @@ Done.
 
 ### 4. support http-proxy
 
-undone
+Done
 
 ### 5. support file watch
 
