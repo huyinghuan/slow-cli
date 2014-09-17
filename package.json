@@ -1,6 +1,6 @@
 {
   "name": "slow-cli",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "a web javascript framework",
   "author": "huyinghuan",
   "homepage": "https://github.com/huyinghuan/slow-cli",
@@ -47,8 +47,6 @@
     "socket.io": "^1.1.0"
   },
   "scripts": {
-    "prepublish": "coffee -o ./ -c src/",
-    "prestart": "coffee -o ./ -c src/",
-    "pretest": "coffee -o ./ -c src"
+    "prepublish": "coffee -o ./ -c src/"
   }
 }
