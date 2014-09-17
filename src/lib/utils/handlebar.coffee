@@ -28,6 +28,7 @@ compileFile = (filePath, cb)->
 #编译文件 同步
 compileFileSync = (filePath, context = WebGlobal)->
   html = _fs.readFileSync filePath, 'utf8'
+  return html if /(\.html)$/.test filePath #如果是html文件则不进行编译
   template = _Handlebars.compile html
   template(context)
 
@@ -37,9 +38,6 @@ getTemplateContent = (fileName, context = {})->
   filePath = "#{filePath}.html"
   html = compileFileSync filePath, context
   return new _Handlebars.SafeString html
-
-
-#
 
 #文件监视器
 _Handlebars.registerHelper 'watch_file', ()->
@@ -68,8 +66,8 @@ _Handlebars.registerHelper 'import', (filePath)->
 
 #js, css文件引用
 _Handlebars.registerHelper 'include', (files)->
-  arr = _glob.sync files, cwd: _util_file.cwd()
-  tags = _tag.generateTags arr
+  #根据通配符获取文件列表
+  tags = _tag.generateTags _util_file.getMatchFilesQueue files
   return new _Handlebars.SafeString tags
 
 #handlebar 自定义工具

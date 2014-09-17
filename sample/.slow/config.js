@@ -7,11 +7,14 @@
         "index": "index.html",
         "cache-time": 60 * 60 * 24 * 7,
         "gzip": true,
-        "isWatchFile": true
+        "isWatchFile": true,
+        "showResponseTime": true
       },
       "proxy": {
-        "path": "/api",
-        "redirect": "http://localhost:8001"
+        "path": /^\/api/,
+        "options": {
+          "target": "http://localhost:8000"
+        }
       },
       "error": {
         "403": ''
@@ -23,7 +26,8 @@
         "index": "index.html",
         "cache-time": 60 * 60 * 24 * 7,
         "gzip": true,
-        "isWatchFile": true
+        "isWatchFile": true,
+        "showResponseTime": false
       },
       "proxy": {
         "path": "/api",

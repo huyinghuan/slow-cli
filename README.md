@@ -2,6 +2,20 @@ Slow
 ==============
 A web develop framwork.
 
+## Install
+
+```
+npm install -g slow-cli
+```
+
+## Getting Start
+
+In any directory, run
+```
+slow
+```
+and then open browser with http://localhost:3000
+
 ## Feature
 
 ### 1. support less
@@ -21,7 +35,7 @@ Done.
 
 ### 4. support http-proxy
 
-undone
+Done
 
 ### 5. support file watch
 
@@ -35,3 +49,12 @@ Done
 ## LICENCE
 
   MIT
+
+## History
+v0.1.1
+
+1. update README.md and fix bug can not install 
+
+v0.1.0
+
+1. finish basic function

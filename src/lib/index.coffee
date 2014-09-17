@@ -46,7 +46,8 @@ module.exports = ->
   slow.cwd = current
   #挂上基本设置
   slow.base = config.base
-
+  slow._all_ = config
+  slow.proxy = config.proxy
   slow.env = env
 
   slow.isProduct = ()->
