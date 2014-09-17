@@ -2,10 +2,12 @@ Tag = module.exports = {}
 
 #生成js标签
 generateScriptTag = (src)->
+  src = src.replace /(\.coffee)$/, '.coffee'
   "<script src='#{src}'></script>"
 
 #生成css标签
 generateStyleTag = (href)->
+  href = href.replace /(\.less)$/, '.css'
   "<link href='#{href}' rel='stylesheet' type='text/css'>"
 
 generateTags = (filePaths)->
