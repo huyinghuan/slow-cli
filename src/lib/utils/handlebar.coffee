@@ -52,7 +52,7 @@ _Handlebars.registerHelper 'watch_file', ()->
   getTemplateContent "watch-file"
 
 #html 文件引用
-_Handlebars.registerHelper 'import', (filePath)->
+_Handlebars.registerHelper 'include', (filePath)->
   origin_path = filePath
   filePath = _util_file.getFilePath filePath
   reg = /(\.html|\.hbs)$/
@@ -71,7 +71,7 @@ _Handlebars.registerHelper 'import', (filePath)->
   return new _Handlebars.SafeString html
 
 #js, css文件引用
-_Handlebars.registerHelper 'include', (files)->
+_Handlebars.registerHelper 'import', (files)->
   #根据通配符获取文件列表
   tags = _tag.generateTags _util_file.getMatchFilesQueue files
   return new _Handlebars.SafeString tags
