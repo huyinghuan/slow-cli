@@ -42,11 +42,8 @@ File.watch  = (cb)->
     persistent: true
   cwd = SLOW.cwd
   watcher = _chokidar.watch(cwd, options)
-
-  cb((socket)->
-    watcher.on('change', (path)->
-      socket.emit('file-change')
-    )
+  watcher.on('change', (path)->
+    cb and cb()
   )
 
 #获取通配符匹配的文件名

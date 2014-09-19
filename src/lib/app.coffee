@@ -1,7 +1,7 @@
 _http = require 'http'
 _middleware = require './middleware'
 _utils_file = require './utils/file'
-
+_EventEmitter = require('events').EventEmitter
 port = SLOW.port
 environment = SLOW.env
 
@@ -13,11 +13,9 @@ server = _http.createServer(
 #初始化文件监控
 initWatchFile = ()->
   _io = require('socket.io')(server)
-  _utils_file.watch (cb)->
-    _io.on('connection', (socket)->
-      # monitor files change
-      cb socket
-    )
+
+  _utils_file.watch ()->
+    _io.sockets.emit 'file-change'
 
 #生产环境中不建设文件变化
 if not SLOW.isProduct()

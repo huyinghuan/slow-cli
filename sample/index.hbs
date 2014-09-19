@@ -7,9 +7,13 @@
   {{import "css/*.css, css/*.less"}}
 </head>
 <body>
-<div class="pure-g">
-{{include "template/nav"}}
-{{include "template/body"}}
+{{include "template/top-nav"}}
+<div class="container">
+  <div class="row">
+    {{include "template/nav"}}
+    {{include "template/body"}}
+  </div>
 </div>
+{{watch_file}}
 </body>
 </html>
