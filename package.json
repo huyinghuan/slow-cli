@@ -47,6 +47,6 @@
     "socket.io": "^1.1.0"
   },
   "scripts": {
-    "prepublish": "coffee -o ./ -c src/"
+    "prepublish": "coffee --no-header -o ./ -c src/"
   }
 }
