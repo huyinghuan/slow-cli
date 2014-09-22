@@ -3,6 +3,7 @@ _middleware = require './middleware'
 _utils_file = require './utils/file'
 _EventEmitter = require('events').EventEmitter
 port = SLOW.port
+proxy = SLOW.proxy
 environment = SLOW.env
 
 server = _http.createServer(
@@ -23,5 +24,7 @@ if not SLOW.isProduct()
 
 
 server.listen port
-console.log "Server running at http://127.0.0.1:#{port}/"
+
 console.log "Server enviroment is '#{environment}'"
+console.log "Server running at http://127.0.0.1:#{port}/"
+console.log "Server proxy #{proxy.path} to #{proxy.options.target}" if proxy.options.target

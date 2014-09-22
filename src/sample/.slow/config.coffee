@@ -23,7 +23,8 @@ module.exports =
       "isWatchFile": true #在生产环境中该配置无效.也就是不会监控任何文件改变
       "showResponseTime": false #是否显示每个请求的响应时间
     "proxy": #代理配置
-      "path": "/api"
-      "redirect": "http://localhost:8001"
+      "path": /^\/api/
+      "options":
+        "target": "http://localhost:8000"
     "error": #错误页面配置
       "403": ''
