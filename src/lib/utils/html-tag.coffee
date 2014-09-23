@@ -10,13 +10,14 @@ generateStyleTag = (href)->
   href = href.replace /(less)$/, 'css'
   "<link href='#{href}' rel='stylesheet' type='text/css'>"
 
-generateTags = (filePaths)->
+generateTags = (filePaths, root = '/')->
   cssReg = /(\.css|\.less)$/
   jsReg = /(\.js|\.coffee)$/
+  root = "#{root}/" if not /\/$/.test root
   queue = []
   for uri in filePaths
-    queue.push generateScriptTag uri if jsReg.test uri
-    queue.push generateStyleTag uri if cssReg.test uri
+    queue.push generateScriptTag "#{root}#{uri}" if jsReg.test uri
+    queue.push generateStyleTag "#{root}#{uri}" if cssReg.test uri
   queue.join '\n'
 
 
