@@ -3,7 +3,7 @@ _path = require 'path'
 _fse = require 'fs-extra'
 _fs = require 'fs'
 _build = require './build'
-
+colors = require 'colors'
 Log = require 'log4slow'
 
 identity = '.slow'
@@ -26,11 +26,6 @@ module.exports = ->
     _fse.copySync sample, _path.join current, identity
     process.exit 1
 
-  #获取slow的配置
-  config = require _path.join current, identity, "config"
-  #初始化log配置
-  Log.init config.log
-
   #构建项目
   if _program.build
     _build current, config.build
@@ -39,9 +34,12 @@ module.exports = ->
   #如果是在目录下正常运行slow
   #1. 判断是否存在.slow目录
   if not _fs.existsSync _path.join(current, identity)
-    Log.warn "you do not init slow. please run slow init in the project directory."
+    console.log "you do not init slow. please run slow init in the project directory.".yellow
     current =  _path.join(__dirname, '..', 'sample')
-    Log.info "slow run defalut sample in #{current}"
+    console.log "slow run defalut sample in #{current}".blue
+
+  #获取slow的配置
+  config = require _path.join current, identity, "config"
 
   #开发模式 or 生产模式?
   env = _program.env or config.environment

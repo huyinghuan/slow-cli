@@ -1,6 +1,6 @@
 {
   "name": "slow-cli",
-  "version": "0.1.7",
+  "version": "0.1.7-1",
   "description": "a web javascript framework",
   "author": "huyinghuan",
   "homepage": "https://github.com/huyinghuan/slow-cli",
@@ -36,6 +36,8 @@
     "async": "^0.9.0",
     "chokidar": "^0.8.4",
     "coffee-script": "",
+    "color": "^0.7.1",
+    "colors": "^0.6.2",
     "commander": "",
     "fs-extra": "",
     "glob": "^4.0.5",
