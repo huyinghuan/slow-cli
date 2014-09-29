@@ -26,6 +26,12 @@ module.exports =
         "target": "http://localhost:8000"
     "error": #错误页面配置
       "403": ''
+    "log": #log配置.具体可以参考npm package log4slow的配置(http://github.com/huyinghuan/log4slow)
+      "log2console": true,
+      "timestamp": false,
+      "levelShow": true,
+      "lineInfo": false,
+      "log2file": false
   "product": #成品配置
     "port": 3000 #运行端口
     "base": #基本配置

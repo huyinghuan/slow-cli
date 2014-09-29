@@ -3,7 +3,9 @@ _path = require 'path'
 _fse = require 'fs-extra'
 _fs = require 'fs'
 _build = require './build'
+
 Log = require 'log4slow'
+
 identity = '.slow'
 
 module.exports = ->
@@ -26,6 +28,8 @@ module.exports = ->
 
   #获取slow的配置
   config = require _path.join current, identity, "config"
+  #初始化log配置
+  Log.init config.log
 
   #构建项目
   if _program.build
@@ -38,8 +42,6 @@ module.exports = ->
     Log.warn "you do not init slow. please run slow init in the project directory."
     current =  _path.join(__dirname, '..', 'sample')
     Log.info "slow run defalut sample in #{current}"
-
-
 
   #开发模式 or 生产模式?
   env = _program.env or config.environment
@@ -57,7 +59,8 @@ module.exports = ->
   slow._all_ = config
   slow.proxy = config.proxy
   slow.env = env
-
+  slow.log = config.log
+  slow.version = version
   slow.isProduct = ()->
     env is 'product'
 

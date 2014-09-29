@@ -1,6 +1,6 @@
 Log = require 'log4slow'
 #打印响应时间
-Log.init(lineInfo: false)
+Log.init SLOW.log
 
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
