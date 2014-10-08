@@ -4,7 +4,6 @@ _fse = require 'fs-extra'
 _fs = require 'fs'
 _build = require './build'
 colors = require 'colors'
-Log = require 'log4slow'
 
 identity = '.slow'
 
