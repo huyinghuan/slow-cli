@@ -5,6 +5,7 @@ _path = require 'path'
 _mime = require 'mime'
 _chokidar = require 'chokidar'
 _glob = require 'glob'
+_fs = require 'fs'
 
 _util_string = require './String'
 
@@ -52,3 +53,17 @@ File.getMatchFilesQueue = (wildcard)->
   queue = []
   queue = queue.concat _glob.sync filePath, cwd: SLOW.cwd for filePath in filePathQueue when not _util_string.isEmpty filePath
   return queue
+
+#获取一个文件夹下所有的文件
+File.getAllFile = (dir, filesQueue)->
+	filesQueue = filesQueue or []
+	filesQueue = []  if typeof filesQueue is "undefined"
+	files = _fs.readdirSync(dir)
+	for i of files
+		continue  unless files.hasOwnProperty(i)
+		name = dir + "/" + files[i]
+		if _fs.statSync(name).isDirectory()
+			File.getAllFile name, filesQueue
+		else
+			filesQueue.push name
+	filesQueue
