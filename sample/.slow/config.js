@@ -19,6 +19,7 @@
         include: /.+(\.hbs)$/
       },
       coffeeCompile: /.+(.coffee)$/,
+      lessCompile: /.+(.less)$/,
       ignore: /\.slow\/.+/
     },
     "develop": {

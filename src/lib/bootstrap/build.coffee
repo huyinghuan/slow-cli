@@ -1,5 +1,8 @@
 _fse = require 'fs-extra'
+_fs = require 'fs'
 _path = require 'path'
+_coffee = require 'coffee-script'
+_less = require 'less'
 _utils_file = require '../utils/file'
 _handlebar = require '../utils/handlebar'
 #当前运行目录
@@ -62,6 +65,19 @@ doBuildCompileHbs = (filename, buildFilename, next)->
   buildConfig = prepareConfig config.hbsCompile
   doBuildCommon filename, buildFilename, buildConfig, next, factory
 
+#编译less
+doBuildLess = (filename, buildFilename, next)->
+  factory = (filename)->
+    buildTargetFilename = replaceFileExt filename, "css"
+    buildTargetFilePath = _path.join buildTarget, buildTargetFilename
+    _fse.ensureFileSync buildTargetFilePath
+    content = _fs.readFileSync _path.join(cwd, filename), encoding: "utf8"
+    _less.render(content, (e, css)->
+      _fse.outputFileSync buildTargetFilePath, css
+      next filename, buildTargetFilePath
+    )
+  buildConfig = prepareConfig config.lessCompile
+  doBuildCommon filename, buildFilename, buildConfig, next, factory
 #copy
 doBuildCopy = (filename, buildFilename, next)->
   #原始文件名和处理后的文件名一致， 则没有经过处理
@@ -70,7 +86,7 @@ doBuildCopy = (filename, buildFilename, next)->
   _fse.copySync filename, buildTargetFilePath
 
 getBuildList = ->
-  [doBuildIgnore, doBuildCompileHbs, doBuildCopy]
+  [doBuildIgnore, doBuildCompileHbs, doBuildLess, doBuildCopy]
 
 #1 检查是否为slow 项目, 仅在自定义项目中运行build，在demo中不运行
 checkLegalProject = (program)->

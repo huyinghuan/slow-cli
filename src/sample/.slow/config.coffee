@@ -18,6 +18,7 @@ module.exports =
     hbsCompile:
       include: /.+(\.hbs)$/ #需要进行complie的文件
     coffeeCompile: /.+(.coffee)$/
+    lessCompile: /.+(.less)$/
     ignore: /\.slow\/.+/ #表达式数组或者单个表达式
   "develop": #开发者模式配置
     "port": 3000 #运行端口
