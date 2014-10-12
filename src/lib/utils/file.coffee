@@ -67,3 +67,7 @@ File.getAllFile = (dir, filesQueue)->
 		else
 			filesQueue.push name
 	filesQueue
+
+File.replaceFileExt = (filename, ext)->
+  return "#{filename}.#{ext}" if filename.indexOf(".") is -1
+  filename.substr(0, filename.lastIndexOf('.')) + ".#{ext}"
