@@ -66,7 +66,7 @@ doBuildCompileHbs = (filename, buildFilename, next)->
   doBuildCommon filename, buildFilename, buildConfig, next, factory
 
 #编译less
-doBuildLess = (filename, buildFilename, next)->
+doBuildCompileLess = (filename, buildFilename, next)->
   factory = (filename)->
     buildTargetFilename = replaceFileExt filename, "css"
     buildTargetFilePath = _path.join buildTarget, buildTargetFilename
@@ -78,6 +78,19 @@ doBuildLess = (filename, buildFilename, next)->
     )
   buildConfig = prepareConfig config.lessCompile
   doBuildCommon filename, buildFilename, buildConfig, next, factory
+
+#编译coffee
+doBuildCompileCoffee = (filename, buildFilename, next)->
+  factory = (filename)->
+    buildTargetFilename = replaceFileExt filename, "js"
+    buildTargetFilePath = _path.join buildTarget, buildTargetFilename
+    _fse.ensureFileSync buildTargetFilePath
+    content = _fs.readFileSync _path.join(cwd, filename), encoding: "utf8"
+    _fse.outputFileSync buildTargetFilePath, _coffee.compile content
+    next filename, buildTargetFilePath
+  buildConfig = prepareConfig config.coffeeCompile
+  doBuildCommon filename, buildFilename, buildConfig, next, factory
+
 #copy
 doBuildCopy = (filename, buildFilename, next)->
   #原始文件名和处理后的文件名一致， 则没有经过处理
@@ -86,7 +99,12 @@ doBuildCopy = (filename, buildFilename, next)->
   _fse.copySync filename, buildTargetFilePath
 
 getBuildList = ->
-  [doBuildIgnore, doBuildCompileHbs, doBuildLess, doBuildCopy]
+  [
+    doBuildIgnore,
+    doBuildCompileHbs, doBuildCompileLess,
+    doBuildCompileCoffee,
+    doBuildCopy
+  ]
 
 #1 检查是否为slow 项目, 仅在自定义项目中运行build，在demo中不运行
 checkLegalProject = (program)->
