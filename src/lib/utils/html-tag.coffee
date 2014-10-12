@@ -13,7 +13,7 @@ generateStyleTag = (href)->
 generateTags = (filePaths, root = '/')->
   cssReg = /(\.css|\.less)$/
   jsReg = /(\.js|\.coffee)$/
-  root = "#{root}/" if not /\/$/.test root
+  root = "#{root}/" if root isnt '' and not /\/$/.test root
   queue = []
   for uri in filePaths
     queue.push generateScriptTag "#{root}#{uri}" if jsReg.test uri

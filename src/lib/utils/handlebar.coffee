@@ -72,7 +72,7 @@ _Handlebars.registerHelper 'include', (filePath)->
 
 #js, css文件引用
 _Handlebars.registerHelper 'import', (files, root)->
-  root = '/' if typeof root isnt 'string'
+  root = '' if typeof root isnt 'string'
   #根据通配符获取文件列表
   tags = _tag.generateTags _util_file.getMatchFilesQueue(files), root
   return new _Handlebars.SafeString tags
