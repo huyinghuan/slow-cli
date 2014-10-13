@@ -2,7 +2,7 @@
   module.exports = {
     "environment": "develop",
     "build": {
-      target: "build",
+      "target": "build",
 
       /*
          *以下配置均包含 include 和 ignore 字段。
@@ -11,16 +11,16 @@
          *ignore 规则优于 include 规则。 字段的值可以为单个元素或者数组或空
          *当省略字段，直接赋值时， 默认为include的值
        */
-      min: {
-        include: /.+(\.css|\.js)$/,
-        ignore: [/.+\.min\.(css|js)$/]
+      "min": {
+        "include": /.+(\.css|\.js)$/,
+        "ignore": [/.+\.min\.(css|js)$/]
       },
-      hbsCompile: {
-        include: /.+(\.hbs)$/
+      "hbsCompile": {
+        "include": /.+(\.hbs)$/
       },
-      coffeeCompile: /.+(.coffee)$/,
-      lessCompile: /.+(.less)$/,
-      ignore: /\.slow\/.+/
+      "coffeeCompile": /.+(.coffee)$/,
+      "lessCompile": /.+(.less)$/,
+      "ignore": /\.slow\/.+/
     },
     "develop": {
       "port": 3000,

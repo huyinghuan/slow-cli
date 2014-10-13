@@ -1,14 +1,12 @@
 _program =  require 'commander'
 _path = require 'path'
-_fse = require 'fs-extra'
 _fs = require 'fs'
 colors = require 'colors'
-
-identity = '.slow'
 
 module.exports = ->
   pkg =  _path.join __dirname, '..', 'package.json'
   version = require(pkg).version
+  current = process.cwd()
 
   _program.version(version)
     .option('init', 'init a slow project')
@@ -20,22 +18,15 @@ module.exports = ->
     .option('update', 'update')
     .parse(process.argv);
 
-  current = process.cwd()
-  #如果是slow 初始化
-  if _program.init
-    sample = _path.join __dirname, '..', 'sample', identity
-    _fse.copySync sample, _path.join current, identity
-    process.exit 1
-
   #绑定全局变量
   require('./global')(_program, current, version)
 
-  #其他操作
+  #slow 可选操作
   require('./bootstrap/index')(_program)
 
   #如果是在目录下正常运行slow
   #1. 判断是否存在.slow目录
-  if not _fs.existsSync _path.join(current, identity)
+  if not _fs.existsSync SLOW.$currentDefaultConfigFilePath
     console.log "you don't init slow. " +
       "please run slow init in the project directory.".yellow
     current =  _path.join(__dirname, '..', 'sample')

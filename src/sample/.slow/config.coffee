@@ -1,7 +1,7 @@
 module.exports =
   "environment": "develop" #开发环境 product #决定是否控制静态文件缓存
   "build": #项目打包时会读取该选项的配置
-    target: "build" #打包文件存放的文件夹.支持绝对路径和相对路径(相对于运行slow的根目录)
+    "target": "build" #打包文件存放的文件夹.支持绝对路径和相对路径(相对于运行slow的根目录)
     ###
       #以下配置均包含 include 和 ignore 字段。
       #其中 include表示将要处理的文件，
@@ -10,16 +10,16 @@ module.exports =
       #当省略字段，直接赋值时， 默认为include的值
     ###
     #需要进行压缩的文件 仅对于js和css
-    min:
+    "min":
       #需要包含的文件
       #默认值 所有js和css全部进行压缩, 所有压缩过的跳过
-      include: /.+(\.css|\.js)$/
-      ignore: [/.+\.min\.(css|js)$/] #已经压缩过的可以忽略。
-    hbsCompile:
-      include: /.+(\.hbs)$/ #需要进行complie的文件
-    coffeeCompile: /.+(.coffee)$/
-    lessCompile: /.+(.less)$/
-    ignore: /\.slow\/.+/ #表达式数组或者单个表达式
+      "include": /.+(\.css|\.js)$/
+      "ignore": [/.+\.min\.(css|js)$/] #已经压缩过的可以忽略。
+    "hbsCompile":
+      "include": /.+(\.hbs)$/ #需要进行complie的文件
+    "coffeeCompile": /.+(.coffee)$/
+    "lessCompile": /.+(.less)$/
+    "ignore": /\.slow\/.+/ #表达式数组或者单个表达式
   "develop": #开发者模式配置
     "port": 3000 #运行端口
     "base": #基本配置
