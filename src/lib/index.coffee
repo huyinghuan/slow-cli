@@ -27,8 +27,11 @@ module.exports = ->
     _fse.copySync sample, _path.join current, identity
     process.exit 1
 
-  #是否为slow项目
-  _program.isNormalProject = true
+  #绑定全局变量
+  require('./global')(_program, current, version)
+
+  #其他操作
+  require('./bootstrap/index')(_program)
 
   #如果是在目录下正常运行slow
   #1. 判断是否存在.slow目录
@@ -37,13 +40,9 @@ module.exports = ->
       "please run slow init in the project directory.".yellow
     current =  _path.join(__dirname, '..', 'sample')
     console.log "slow run defalut sample in #{current}".blue
-    _program.isNormalProject = false
 
-  #绑定全局变量
+  #更新全局变量
   require('./global')(_program, current, version)
-
-  #其他操作
-  require('./bootstrap/index')(_program)
 
   #启动Slow
   require '../lib/app'

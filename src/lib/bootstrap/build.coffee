@@ -1,3 +1,4 @@
+_fs = require 'fs'
 _utils_file = require '../utils/file'
 _build = require './build/index'
 #当前运行目录
@@ -7,7 +8,7 @@ end = -> process.exit 1
 
 #1 检查是否为slow 项目, 仅在自定义项目中运行build，在demo中不运行
 checkLegalProject = (program)->
-  return true if program.isNormalProject
+  return true if _fs.existsSync _path.join($current, SLOW.identify, "config.js")
   console.log 'Build stop!'.yellow
   console.log "Can't build project in SLOW sample".red
   return false

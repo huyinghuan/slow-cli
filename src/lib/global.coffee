@@ -10,6 +10,7 @@ module.exports = (program, current, version, identity = '.slow')->
   global.SLOW =
     _config_: config
     _env_: config[env]
+    _def_config_path_: _path.join(__dirname, "..", "sample", identity) #默认的文件名路径
     port: program.port or configEnv.port
     cwd: current
     base: configEnv.base
@@ -17,4 +18,5 @@ module.exports = (program, current, version, identity = '.slow')->
     env: env
     log: configEnv.log
     version: version
+    identify: identity #隐藏文件夹名
     isProduct: -> env is 'product'
