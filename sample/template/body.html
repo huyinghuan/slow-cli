@@ -2,19 +2,126 @@
   <h1>SLOW</h1>
   <h4>A web framework</h4>
   <div id="whatis">
-    <h2>What is SLOW?</h2>
-    <p>
-    SLOW is a web framework that help web developer focus on html,css,javascript and don't need care for server.
-    You can develop web with LESS and Coffee and don't need compile them, SLOW will do them automatically.
-    </p>
+    <h2>1. What is SLOW?</h2>
+    <p>SLOW is a web framework that help web developer focus on html,css,</p>
+    <p>javascript and don't need care for server. You can develop web with LESS</p>
+    <p>and Coffee and don't need compile them, SLOW will do them automatically.</p>
   </div>
   <div id="install">
-    <h2>How to install?</h2>
+    <h2>2. How to install?</h2>
     <p>Slow need be installed as global.</p>
     <pre>
       <code>
         sudo npm install -g slow-cli
       </code>
     </pre>
+  </div>
+  <div id="GettingStart">
+    <h2>3. Getting Start</h2>
+    <p>There is a slow project sample in "slow-cli/sample".</p>
+    <h3>3.1 Init a slow project</h3>
+    <pre>
+      <code>
+        #In the project directory, get a slow project by runing
+        slow init
+      </code>
+    </pre>
+    <h3>3.2 take over and starup a http server</h3>
+    <pre>
+      <code>
+        #In the project directory run
+        slow
+        #and then open the browser with http://localhost:3000
+      </code>
+    </pre>
+    <h3>3.3 join your develop!</h3>
+    <p>Now, you can enjoy coding with handlebar, coffeescript, less. </p>
+    <p>don't need use grunt or gulp compile your project.</p>
+  </div>
+  <div id="config">
+    <h2>4. Setting configure for slow</h2>
+    <p>There are all configs for slow, every fields will be described in the </p>
+    <p>next section. this is develop config:(you can find it in .slow/config.js)</p>
+    <pre>
+      <code>
+       {
+        "environment": "develop",
+        "develop": {
+          "port": 3000,
+          "base": {
+            "index": "index.html",
+            "cache-time": 60 * 60 * 24 * 7,
+            "gzip": true,
+            "isWatchFile": true,
+            "showResponseTime": true
+          },
+          "proxy": {
+            "path": /^\/api/,
+            "options": {
+            "target": "http://localhost:8000"
+          }
+          },
+          "error": {
+            "403": ''
+          },
+          "log": {
+            "log2console": true,
+            "timestamp": false,
+            "levelShow": true,
+            "lineInfo": false,
+            "log2file": false
+          }
+       }
+      </code>
+    </pre>
+    <p>this is product config, you can find it in .slow/product-config.js</p>
+    <p>it is similar be develop config.</p>
+    <pre>
+      <code>
+      {
+        "port": 3000,
+        "base": {
+          "index": "index.html",
+          "cache-time": 60 * 60 * 24 * 7,
+          "gzip": true,
+          "isWatchFile": true,
+          "showResponseTime": false
+        },
+        "proxy": false,
+        "error": {
+          "403": ''
+        }
+      };
+      </code>
+    </pre>
+    <p>this is build config. it be used when you run "slow build"</p>
+    <p>you can modify in .slow/build.js</p>
+    <pre>
+      <code>
+      {
+        "target": "build",
+        "mincss": {
+          "include": /.+\.(less|css)$/,
+          "ignore": [/.+(\.min\.css)$/],
+          "options": {}
+        },
+        "minjs": {
+          "include": /.+\.(js|coffee)$/,
+          "ignore": [/.+(\.min\.js)$/],
+          "options": {
+            "mangle": false,
+            "compress": {}
+          }
+        },
+        "hbsCompile": {
+          "include": /.+(\.hbs)$/
+        },
+        "coffeeCompile": /.+(.coffee)$/,
+        "lessCompile": /.+(.less)$/,
+        "ignore": [/^(\.slow).+/, /.*(\.gitignore)$/]
+      };
+      </code>
+    </pre>
+    <h3>4.1 develop config</h3>
   </div>
 </div>

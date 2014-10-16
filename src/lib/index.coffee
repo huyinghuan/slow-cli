@@ -2,6 +2,7 @@ _program =  require 'commander'
 _path = require 'path'
 _fs = require 'fs'
 colors = require 'colors'
+#初始化sload
 require('sload').init __dirname
 module.exports = ->
   pkg =  _path.join __dirname, '..', 'package.json'
