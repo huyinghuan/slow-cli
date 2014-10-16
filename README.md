@@ -1,6 +1,6 @@
 Slow
 ==============
-A web develop framwork.
+A web develop framwork. http://xiacijian.com
 
 ## Install
 
@@ -51,6 +51,18 @@ Done
   MIT
 
 ## History
+
+v0.1.8-beta1
+
+1. add shell ```slow build``` package slow project to a pure html project.
+not need depend ```slow```
+
+>slow build support:
+>1. autocompile coffee, less, handlebar
+>2. compress js, css to min file
+
+
+
 v0.1.7
 
 1. fix a bug that slow-cli crash when proxy config don't exists
