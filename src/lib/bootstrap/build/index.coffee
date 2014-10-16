@@ -1,31 +1,40 @@
 _fs = require 'fs'
 _fse = require 'fs-extra'
 _path = require 'path'
+_ = require 'lodash'
 $config = SLOW._config_.build
 $buildTarget = SLOW._config_.build.target
 
-getPipeList = ->
+getMiddleList = (dir)->
   queue = []
-  files = _fs.readdirSync __dirname
+  files = _fs.readdirSync dir
   for fileName in files
-    filePath = _path.join __dirname, fileName
-    continue if filePath is __filename
-    queue.push require filePath if _fs.statSync(filePath).isFile()
+    filePath = _path.join dir, fileName
+    if _fs.statSync(filePath).isFile()
+      queue.push require(filePath)
+  return queue
+
+getModuleList = ->
+  queue = []
+  queue = queue.concat getMiddleList _path.join(__dirname, 'prepare')
+  queue = queue.concat getMiddleList _path.join(__dirname, 'normal')
   return queue
 
 #转成标准配置格式
 prepareConfig = (config)->
-  if config instanceof RegExp
+  if _.isRegExp(config) or _.isArray(config)
     config =
-      include: [config]
+      include: [].concat(config)
       ignore: []
   rules = [].concat(config.include or [])
   ignoreRules = [].concat(config.ignore or [])
-  include: rules
-  ignore: ignoreRules
+  config.include = rules
+  config.ignore = ignoreRules
+  return config
 
 #忽略全局配置
 doBuildIgnore = (filename, buildFilename, next)->
+  return next filename, buildFilename if not $config.ignore
   rules = prepareConfig($config.ignore).include
   return for rule in rules when rule.test filename
   return if filename.indexOf($buildTarget) is 0
@@ -41,17 +50,28 @@ doBuildCopy = (filename, buildFilename, next)->
 
 #通用的文件处理
 exports.doBuildCommon = (filename, buildFilename, buildConfig, next, factory)->
+  #配置文件不存在
+  return next filename, buildFilename if not $config[buildConfig]
   buildConfig = prepareConfig $config[buildConfig]
   rules = buildConfig.include
   ignoreRules = buildConfig.ignore
-  for ignoreRule in ignoreRules
-    return next filename, buildFilename if ignoreRule.test filename
+  #是否匹配该处理函数
+  isMatchFile = false
   for rule in rules
-    return factory filename if rule.test filename
-  next filename, buildFilename
+    continue if not _.isRegExp rule
+    if rule.test filename
+      isMatchFile = true
+      break
+
+  return next filename, buildFilename if not isMatchFile
+
+  for ignoreRule in ignoreRules
+    continue if not _.isRegExp ignoreRule
+    return next filename, buildFilename if ignoreRule.test filename
+  factory filename
 
 exports.getPipeList = ->
   list = [doBuildIgnore]
-  list = list.concat getPipeList()
-  list.push doBuildCopy
+  list = list.concat getModuleList()
+  list = list.concat doBuildCopy
   return list

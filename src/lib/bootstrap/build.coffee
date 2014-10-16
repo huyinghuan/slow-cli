@@ -18,8 +18,9 @@ buildFile = (file)->
   path = file.replace "#{$current}/", ""
   list = _build.getPipeList()
   next = (filename, buildFilename)->
+    return if not list.length
     build = list.shift()
-    build filename, buildFilename, next if build
+    build filename, buildFilename, next
   next path, path
 
 module.exports = (program, next)->
@@ -27,7 +28,7 @@ module.exports = (program, next)->
   console.log 'Building...'.blue
   return end() if not checkLegalProject(program)
   #文件处理
-  allFils = _utils_file.getAllFile $current
-  buildFile filename for filename in allFils
+  allFiles = _utils_file.getAllFile $current
+  buildFile filename for filename in allFiles
   console.log 'Build complete!'.green
   end()
