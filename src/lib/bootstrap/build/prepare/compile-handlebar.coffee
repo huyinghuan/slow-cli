@@ -1,8 +1,8 @@
 _path = require 'path'
-_handlebar = require '../../../utils/handlebar'
+_handlebar = sload 'utils/handlebar'
 _fse = require 'fs-extra'
-_utils_file = require '../../../utils/file'
-_doBuildCommon = require('./../index').doBuildCommon
+_utils_file = sload 'utils/file'
+_doBuildCommon = sload('bootstrap/build/index').doBuildCommon
 $cwd = process.cwd()
 $buildTarget = SLOW._config_.build.target
 

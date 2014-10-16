@@ -1,5 +1,5 @@
 _fs = require 'fs'
-_utils_file = require '../utils/file'
+_utils_file = sload 'utils/file'
 _build = require './build/index'
 #当前运行目录
 $current = SLOW.cwd

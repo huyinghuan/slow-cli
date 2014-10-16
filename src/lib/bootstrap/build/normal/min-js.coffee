@@ -3,7 +3,7 @@ _fs = require 'fs'
 _fse = require 'fs-extra'
 _UglifyJS = require "uglify-js"
 _ = require 'lodash'
-_doBuildCommon = require('./../index').doBuildCommon
+_doBuildCommon = sload('bootstrap/build/index').doBuildCommon
 #以字符串形式压缩
 defaultOptions = fromString: true
 #获取 min配置

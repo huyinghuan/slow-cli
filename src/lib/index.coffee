@@ -2,7 +2,7 @@ _program =  require 'commander'
 _path = require 'path'
 _fs = require 'fs'
 colors = require 'colors'
-
+require('sload').init __dirname
 module.exports = ->
   pkg =  _path.join __dirname, '..', 'package.json'
   version = require(pkg).version
@@ -19,10 +19,10 @@ module.exports = ->
     .parse(process.argv);
 
   #绑定全局变量
-  require('./global')(_program, current, version)
+  sload('global')(_program, current, version)
 
   #slow 可选操作
-  require('./bootstrap/index')(_program)
+  sload('bootstrap/index')(_program)
 
   #如果是在目录下正常运行slow
   #1. 判断是否存在.slow目录
@@ -33,7 +33,7 @@ module.exports = ->
     console.log "slow run defalut sample in #{current}".blue
 
   #更新全局变量
-  require('./global')(_program, current, version)
+  sload('global')(_program, current, version)
 
   #启动Slow
   require '../lib/app'

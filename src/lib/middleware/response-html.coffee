@@ -2,9 +2,9 @@
   响应.html .hbs请求
 ###
 _mime = require 'mime'
-_utils_file = require '../utils/file'
+_utils_file = sload 'utils/file'
 _fs = require 'fs'
-_utils_handlebar = require '../utils/handlebar'
+_utils_handlebar = sload 'utils/handlebar'
 
 module.exports = (req, resp, next)->
   pathName = req.client.pathName

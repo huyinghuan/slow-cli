@@ -2,7 +2,7 @@
   响应静态资源请求
 ###
 
-_utils_file = require '../../utils/file'
+_utils_file = sload 'utils/file'
 _fs = require 'fs'
 module.exports = (req, resp, next)->
   pathName = req.client.pathName

@@ -2,7 +2,7 @@
   响应.js请求
 ###
 _mime = require 'mime'
-_utils_file = require '../utils/file'
+_utils_file = sload 'utils/file'
 _fs = require 'fs'
 _async = require 'async'
 _coffee = require 'coffee-script'

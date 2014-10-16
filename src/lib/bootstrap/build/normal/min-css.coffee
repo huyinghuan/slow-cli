@@ -2,7 +2,7 @@ _path = require 'path'
 _fs = require 'fs'
 _fse = require 'fs-extra'
 _CleanCSS = require 'clean-css'
-_doBuildCommon = require('./../index').doBuildCommon
+_doBuildCommon = sload('bootstrap/build/index').doBuildCommon
 
 minOptions = SLOW._config_.build.mincss?.options
 

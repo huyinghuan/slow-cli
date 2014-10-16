@@ -2,7 +2,7 @@
   响应.css请求
 ###
 _mime = require 'mime'
-_utils_file = require '../utils/file'
+_utils_file = sload 'utils/file'
 _fs = require 'fs'
 _less = require 'less'
 _async = require 'async'

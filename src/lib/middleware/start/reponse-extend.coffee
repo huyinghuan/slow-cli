@@ -4,7 +4,7 @@
 _mime = require 'mime'
 _fs = require 'fs'
 _zlib = require 'zlib'
-_utils_file = require '../../utils/file'
+_utils_file = sload 'utils/file'
 
 module.exports = (req, resp, next)->
   #404

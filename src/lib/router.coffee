@@ -1,4 +1,4 @@
-URLExtra = require './utils/url-extra'
+URLExtra = sload 'utils/url-extra'
 
 module.exports =  (req, resp, next)->
   url = new URLExtra req

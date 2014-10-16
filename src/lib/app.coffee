@@ -1,6 +1,6 @@
 _http = require 'http'
-_middleware = require './middleware'
-_utils_file = require './utils/file'
+_middleware = sload 'middleware'
+_utils_file = sload 'utils/file'
 _EventEmitter = require('events').EventEmitter
 port = SLOW.port
 proxy = SLOW.proxy

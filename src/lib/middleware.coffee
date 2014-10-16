@@ -1,7 +1,7 @@
 _fs = require 'fs'
 _path = require 'path'
 
-_router = require './router'
+_router = sload 'router'
 
 wares = []
 

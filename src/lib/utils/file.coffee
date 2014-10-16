@@ -56,17 +56,17 @@ File.getMatchFilesQueue = (wildcard)->
 
 #获取一个文件夹下所有的文件
 File.getAllFile = (dir, filesQueue)->
-	filesQueue = filesQueue or []
-	filesQueue = []  if typeof filesQueue is "undefined"
-	files = _fs.readdirSync(dir)
-	for i of files
-		continue  unless files.hasOwnProperty(i)
-		name = dir + "/" + files[i]
-		if _fs.statSync(name).isDirectory()
-			File.getAllFile name, filesQueue
-		else
-			filesQueue.push name
-	filesQueue
+  filesQueue = filesQueue or []
+  filesQueue = []  if typeof filesQueue is "undefined"
+  files = _fs.readdirSync(dir)
+  for i of files
+    continue  unless files.hasOwnProperty(i)
+    name = dir + "/" + files[i]
+    if _fs.statSync(name).isDirectory()
+      File.getAllFile name, filesQueue
+    else
+      filesQueue.push name
+  filesQueue
 
 File.replaceFileExt = (filename, ext)->
   return "#{filename}.#{ext}" if filename.indexOf(".") is -1
