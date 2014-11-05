@@ -122,6 +122,26 @@
       };
       </code>
     </pre>
-    <h3>4.1 develop config</h3>
+
+    <h3>4.1 Set work environment</h3>
+    <p>when we are developing a web project, we are in develop environment,</p>
+    <p>so, at the first, you can setting slow work environment to be "develop"</p>
+    <p>like this:</p>
+    <pre>
+      <code>
+      module.export =
+      {
+        "environment": "develop",
+        ...
+      }
+      </code>
+    </pre>
+    <p>There just are two value for "environment" option, "develop" or "product",</p>
+    <p>the default setting is "develop". the environment option tell "slow" which</p>
+    <p>config should be load when it is working.</p>
+    <h3>4.2 config develop environment</h3>
+    <p>After set the work environment be "develop", Now we can config the develop environment</p>
+    <p>There already has some default config option at ".slow/config.js". You</p>
+    <p>define them by yourself in "develop" field</p>
   </div>
 </div>
