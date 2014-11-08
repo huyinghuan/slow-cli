@@ -8,6 +8,8 @@
 >SLOW is a web framework that help web developer focus on html,css,
 >javascript and don't need care for server. You can develop web with LESS
 >and Coffee and don't need compile them, SLOW will do them automatically.
+>So you just need spend less time in work, coding slowly and thinking in coding,
+>enjoy coding. Coding is not just for finish your work.
 
 #How to install?
 `slow` need be installed as global.
