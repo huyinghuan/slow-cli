@@ -4,7 +4,9 @@ $identity = ".slow"
 $identityFile = "config.js"
 $identityFilePath = _path.join $identity, $identityFile
 $defaultConfigFilePath = _path.join __dirname, "..", "sample", $identityFilePath
+$defaultConfigDirectoryPath = _path.join __dirname, "..", "sample", $identity
 $currentDefaultConfigFilePath = _path.join process.cwd(), $identityFilePath
+$currentDefaultConfigDirectoryPath = _path.join process.cwd(), $identity
 #全局变量
 module.exports = (program, current, version)->
   #获取slow的配置
@@ -28,6 +30,8 @@ module.exports = (program, current, version)->
     env: env #当前工作环境
     log: configEnv.log #日志配置
     version: version #当前版本
-    $defaultConfigFilePath: $defaultConfigFilePath
+    $defaultConfigFilePath: $defaultConfigFilePath #默认主配置文件路径
+    $defaultConfigDirectoryPath: $defaultConfigDirectoryPath #默认配置文件存储的文件夹
     $currentDefaultConfigFilePath: $currentDefaultConfigFilePath
+    $currentDefaultConfigDirectoryPath: $currentDefaultConfigDirectoryPath #运行环境中配置文件的文件夹
     isProduct: -> env is 'product'

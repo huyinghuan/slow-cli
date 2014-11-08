@@ -191,17 +191,19 @@ the port that be `slow`used.default is `3000`.
 
   MIT
 
-# History
+## History
+v0.1.8beta3
+
+1. update command ```init```
 
 v0.1.8-beta1
 
 1. add shell ```slow build``` package slow project to a pure html project.
-not need depend ```slow```
+Don't need depend ```slow```
 
 >slow build support:
 >1. autocompile coffee, less, handlebar
 >2. compress js, css to min file
-
 
 
 v0.1.7
