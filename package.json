@@ -1,6 +1,6 @@
 {
   "name": "slow-cli",
-  "version": "0.1.8beta3",
+  "version": "0.1.8beta5",
   "description": "a web javascript framework",
   "author": "huyinghuan",
   "homepage": "https://github.com/huyinghuan/slow-cli",
@@ -42,7 +42,7 @@
     "fs-extra": "",
     "glob": "^4.0.5",
     "handlebars": "^2.0.0-beta.1",
-    "http-proxy": "^1.3.0",
+    "http-proxy": "^1.7.3",
     "less": "^1.7.5",
     "lodash": "^2.4.1",
     "log4slow": "0.1.0",

@@ -28,4 +28,3 @@ server.listen port
 console.log "slow-cli version is #{SLOW.version}"
 console.log "Server enviroment is '#{environment}'"
 console.log "Server running at http://127.0.0.1:#{port}/"
-console.log "Server proxy #{proxy.path} to #{proxy.options.target}" if proxy.options.target
