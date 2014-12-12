@@ -9,5 +9,9 @@ module.exports = (req, resp, next)->
     spellTime = new Date().getTime() - startTime
     msg = "( #{pathName} ):#{spellTime} ms : [#{resp.statusCode}]"
     return if not SLOW.base.showResponseTime
-    if resp.statusCode is 200 then Log.info msg else Log.error msg
+    switch resp.statusCode
+      when 200, 304 then Log.info msg
+      when 401, 403, 404, 500
+        Log.error msg
+      else Log.info msg
   next()
