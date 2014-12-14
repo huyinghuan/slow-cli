@@ -8,7 +8,7 @@ module.exports =
       "gzip": true #是否gzip资源文件
       "isWatchFile": true #是否监控文件变化刷新文件
       "showResponseTime": true #是否显示每个请求的响应时间
-    "proxy": #代理配置 #不需要代理 设为false
+    "proxy": #代理配置 #不需要代理 设为false 支持 多路径代理。将类型改成数组即可: [{path:..,options:..}]
       "path": /^\/api/ #需要进行代理的路径。支持正则
       "options":
         "target": "http://localhost:8000"

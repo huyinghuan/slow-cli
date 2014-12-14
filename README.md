@@ -192,6 +192,10 @@ the port that be `slow`used.default is `3000`.
   MIT
 
 ## History
+v.0.1.8beta6
+
+1. support proxy multipath
+
 v0.1.8beta3
 
 1. update command ```init```
