@@ -1,23 +1,24 @@
 _fs = require 'fs'
 _path = require 'path'
+_sload = require 'sload'
+_ = require 'lodash'
 
 _router = sload 'router'
 
 wares = []
 
 addMiddleware = (ware)->
-  wares.push ware
+  if _.isArray(ware)
+    wares = wares.concat ware
+  else
+    wares.push ware
 
 #扫描中间件
 scanMiddleware = (middleDirector)->
   #获取中间件目录
   dir = _path.join __dirname, middleDirector
-  files = _fs.readdirSync dir
-  for file in files
-    filepath = _path.join(dir, file)
-    #加入到中间件队列
-    addMiddleware require filepath if _fs.statSync(filepath).isFile()
-  0
+  list = _sload.scan dir
+  addMiddleware(list)
 
 #最先执行的中间件
 scanHeadMiddleware = ->

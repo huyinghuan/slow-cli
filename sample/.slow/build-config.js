@@ -32,7 +32,7 @@
     },
     "coffeeCompile": /.+(.coffee)$/,
     "lessCompile": /.+(.less)$/,
-    "ignore": [/^(\.slow).+/, /.*(\.gitignore)$/]
+    "ignore": [/^(\.slow).+/, /.*(\.gitignore)$/, /^\..+/]
   };
 
 }).call(this);

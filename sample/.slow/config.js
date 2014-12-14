@@ -10,12 +10,7 @@
         "isWatchFile": true,
         "showResponseTime": true
       },
-      "proxy": {
-        "path": /^\/api/,
-        "options": {
-          "target": "http://localhost:8000"
-        }
-      },
+      "proxy": false,
       "error": {
         "403": ''
       },

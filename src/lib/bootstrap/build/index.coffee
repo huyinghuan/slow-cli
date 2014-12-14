@@ -2,22 +2,14 @@ _fs = require 'fs'
 _fse = require 'fs-extra'
 _path = require 'path'
 _ = require 'lodash'
+_sload = require 'sload'
 $config = SLOW._config_.build
 $buildTarget = SLOW._config_.build.target
 
-getMiddleList = (dir)->
-  queue = []
-  files = _fs.readdirSync dir
-  for fileName in files
-    filePath = _path.join dir, fileName
-    if _fs.statSync(filePath).isFile()
-      queue.push require(filePath)
-  return queue
-
 getModuleList = ->
   queue = []
-  queue = queue.concat getMiddleList _path.join(__dirname, 'prepare')
-  queue = queue.concat getMiddleList _path.join(__dirname, 'normal')
+  queue = queue.concat _sload.scan _path.join(__dirname, 'prepare')
+  queue = queue.concat _sload.scan _path.join(__dirname, 'normal')
   return queue
 
 #转成标准配置格式

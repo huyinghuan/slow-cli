@@ -29,4 +29,4 @@ module.exports =
   "coffeeCompile": /.+(.coffee)$/
   "lessCompile": /.+(.less)$/
   #被直接忽视的文件， 不会进入文件处理，也不会被拷贝
-  "ignore": [/^(\.slow).+/, /.*(\.gitignore)$/] #表达式数组或者单个表达式
+  "ignore": [/^(\.slow).+/, /.*(\.gitignore)$/, /^\..+/] #表达式数组或者单个表达式
