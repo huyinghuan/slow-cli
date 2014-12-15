@@ -5,7 +5,7 @@ _path = require 'path'
 _util_file = require './file'
 _tag = require './html-tag'
 #定义前端的全局变量
-WebGlobal = {}
+WebGlobal = SLOW._config_.WebGlobal
 
 isNeedCompile = (filePath)->
   not /(\.html)$/.test filePath

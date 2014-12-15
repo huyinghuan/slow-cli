@@ -26,3 +26,4 @@ module.exports =
   "product": require './product-config'
   ###项目打包时会读取该选项的配置###
   "build": require './build-config'
+  "WebGlobal": require './web-global'
