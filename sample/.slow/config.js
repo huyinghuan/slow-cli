@@ -1,5 +1,6 @@
 (function() {
   module.exports = {
+    "version": "v1.0",
     "environment": "develop",
     "develop": {
       "port": 3000,

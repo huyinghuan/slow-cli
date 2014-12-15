@@ -1,14 +1,16 @@
+version = if SLOW._config_.version then "?v=#{SLOW._config_.version}" or ""
+
 Tag = module.exports = {}
 
 #生成js标签
 generateScriptTag = (src)->
   src = src.replace /(coffee)$/, 'js'
-  "<script src='#{src}'></script>"
+  "<script src='#{src}#{version}'></script>"
 
 #生成css标签
 generateStyleTag = (href)->
   href = href.replace /(less)$/, 'css'
-  "<link href='#{href}' rel='stylesheet' type='text/css'>"
+  "<link href='#{href}#{version}' rel='stylesheet' type='text/css'>"
 
 generateTags = (filePaths, root = '/')->
   cssReg = /(\.css|\.less)$/
@@ -19,8 +21,6 @@ generateTags = (filePaths, root = '/')->
     queue.push generateScriptTag "#{root}#{uri}" if jsReg.test uri
     queue.push generateStyleTag "#{root}#{uri}" if cssReg.test uri
   queue.join '\n'
-
-
 
 Tag.generateScriptTag = generateScriptTag
 Tag.generateStyleTag = generateStyleTag

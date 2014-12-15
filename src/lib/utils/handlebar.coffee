@@ -3,7 +3,6 @@ _Handlebars = require 'handlebars'
 _async = require 'async'
 _path = require 'path'
 _util_file = require './file'
-_glob = require 'glob'
 _tag = require './html-tag'
 #定义前端的全局变量
 WebGlobal = {}
@@ -72,7 +71,7 @@ _Handlebars.registerHelper 'include', (filePath)->
 
 #js, css文件引用
 _Handlebars.registerHelper 'import', (files, root)->
-  root = '' if typeof root isnt 'string'
+  root = '/' if typeof root isnt 'string'
   #根据通配符获取文件列表
   tags = _tag.generateTags _util_file.getMatchFilesQueue(files), root
   return new _Handlebars.SafeString tags

@@ -1,4 +1,5 @@
 module.exports =
+  "version": "v1.0" #版本号， 将添加在以 import指令 引用的资源文件后. 如 http://xxx.js?v=v1.0
   "environment": "develop" #开发环境 product #决定是否控制静态文件缓存
   "develop": #开发者模式配置
     "port": 3000 #运行端口
