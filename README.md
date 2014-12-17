@@ -217,7 +217,7 @@ Don't need depend ```slow```
 v0.1.7
 
 1. fix a bug that slow-cli crash when proxy config don't exists
-2. add log config in config.js. more config see [log4slow](github.com/huyinghuan/log4slow)
+2. add log config in config.js. more config see [log4slow](http://github.com/huyinghuan/log4slow)
 3. add build project optional.(doing. it will publish in v0.1.8)
 
 v0.1.6
