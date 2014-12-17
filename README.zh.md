@@ -116,15 +116,30 @@ SLOW 支持一定程度上的扩展。比如中间件方式等。只需要在src
 
 ```coffee
 _async = require 'async'
+
+isSassFile = (path)->
+   if ....
+      return true
+
+   else
+      return false
+
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
+
+  if not isSassFile(pathName) #如果pathName 不是 sass文件类型 #伪代码
+      return next() #当请求路径不符合你的拦截请求的话，运行next()  将请求交给下个 拦截器
+
   ....
-  #请求响应
-  result = _sass.compile .....
+  err = null
+  #编译 sass文件
+  try
+    result = _sass.compile .....
+  catch e
+    err = e
   ...
-  _async.waterfall queue, (err, result)->
-    return resp.throwsServerError() if err
-    resp.sendContent result, "text/css"
+  return resp.throwsServerError() if err
+  resp.sendContent result, "text/css"
 ```
 
 如果你使用的是coffee，那么需要目录下编译一次 (不是每个人都用coffee，编译好后，会自动生成到lib相应目录下，方便其他人使用)
