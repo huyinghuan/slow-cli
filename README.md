@@ -194,7 +194,7 @@ the port that be `slow`used.default is `3000`.
 ## History
 v0.1.9beta1
 
-1. 增加 coffeescript 和 hbs编译的容错处理
+1. catch the error when compile  coffeescript and hbs file. avoid the ```slow``` crash.
 
 v0.1.8beta6
 
