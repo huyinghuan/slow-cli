@@ -4,37 +4,37 @@ _fs = require 'fs'
 colors = require 'colors'
 #初始化sload
 require('sload').init __dirname
-module.exports = ->
-  pkg =  _path.join __dirname, '..', 'package.json'
-  version = require(pkg).version
-  current = process.cwd()
 
-  _program.version(version)
-    .option('init', 'init a slow project')
-    .option('-p, --port <n>', 'slow run in port <n>')
-    .option('-e, --env [value]', 'the environment that slow working,' +
-      'develop or product')
-    .option('build', "build project as a web project and " +
-      "can don't depend on slow-cli anymore ")
-    .option('update', 'update')
-    .parse(process.argv);
+pkg =  _path.join __dirname, '..', 'package.json'
+version = require(pkg).version
+current = process.cwd()
 
-  #绑定全局变量
-  sload('global')(_program, current, version)
+_program.version(version)
+  .option('init', 'init a slow project')
+  .option('-p, --port <n>', 'slow run in port <n>')
+  .option('-e, --env [value]', 'the environment that slow working,' +
+    'develop or product')
+  .option('build', "build project as a web project and " +
+    "can don't depend on slow-cli anymore ")
+  .option('update', 'update')
+  .parse(process.argv);
 
-  #slow 可选操作
-  sload('bootstrap/index')(_program)
+#绑定全局变量
+sload('global')(_program, current, version)
 
-  #如果是在目录下正常运行slow
-  #1. 判断是否存在.slow目录
-  if not _fs.existsSync SLOW.$currentDefaultConfigFilePath
-    console.log "you don't init slow. " +
-      "please run slow init in the project directory.".yellow
-    current =  _path.join(__dirname, '..', 'sample')
-    console.log "slow run defalut sample in #{current}".blue
+#slow 可选操作
+sload('bootstrap/index')(_program)
 
-  #更新全局变量
-  sload('global')(_program, current, version)
+#如果是在目录下正常运行slow
+#1. 判断是否存在.slow目录
+if not _fs.existsSync SLOW.$currentDefaultConfigFilePath
+  console.log "you don't init slow. " +
+    "please run slow init in the project directory.".yellow
+  current =  _path.join(__dirname, '..', 'sample')
+  console.log "slow run defalut sample in #{current}".blue
 
-  #启动Slow
-  require '../lib/app'
+#更新全局变量
+sload('global')(_program, current, version)
+
+#启动Slow
+require './app'

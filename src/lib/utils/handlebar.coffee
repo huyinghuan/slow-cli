@@ -24,11 +24,18 @@ compileFile = (filePath, cb)->
   queue.push (content, next)->
     #文件是否需要经过handlebar编译
     return next null, content if not isNeedCompile filePath
-    template = _Handlebars.compile content
-    next null, template(WebGlobal)
+    error = null
+    try
+      template = _Handlebars.compile content
+      content = template(WebGlobal)
+    catch e
+      console.error(e)
+      error = e
+    next error, content
 
   #请求响应
-  _async.waterfall queue, cb
+  _async.waterfall queue, (err, result)->
+    cb(err, result)
 
 #编译文件 同步
 compileFileSync = (filePath, context = WebGlobal)->

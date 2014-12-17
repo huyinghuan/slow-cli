@@ -36,8 +36,13 @@ module.exports = (req, resp, next)->
 
   #文件编译
   queue.push (content, cb)->
-    compiled = _coffee.compile content
-    cb null, compiled
+    error = null
+    try
+      compiled = _coffee.compile content
+    catch e
+      console.error e.toString()
+      error = e
+    cb error, compiled
 
   #请求响应
   _async.waterfall queue, (err, result)->

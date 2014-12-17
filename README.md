@@ -192,7 +192,11 @@ the port that be `slow`used.default is `3000`.
   MIT
 
 ## History
-v.0.1.8beta6
+v0.1.9beta1
+
+1. 增加 coffeescript 和 hbs编译的容错处理
+
+v0.1.8beta6
 
 1. support proxy multipath
 
