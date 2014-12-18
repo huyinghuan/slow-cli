@@ -1,4 +1,4 @@
-version = if SLOW._config_.version then "?v=#{SLOW._config_.version}" or ""
+version = if SLOW._config_.version then "?v=#{SLOW._config_.version}" else ""
 
 Tag = module.exports = {}
 
