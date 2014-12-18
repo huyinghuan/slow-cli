@@ -10,6 +10,7 @@ $buildTarget = SLOW._config_.build.target
 
 module.exports = (filename, buildFilename, next)->
   factory = (filename)->
+    console.log "coffee compile #{filename}"
     buildTargetFilename = _utils_file.replaceFileExt filename, "js"
     buildTargetFilePath = _path.join $buildTarget, buildTargetFilename
     _fse.ensureFileSync buildTargetFilePath

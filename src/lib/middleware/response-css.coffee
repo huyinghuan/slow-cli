@@ -6,6 +6,16 @@ _utils_file = sload 'utils/file'
 _fs = require 'fs'
 _less = require 'less'
 _async = require 'async'
+_path = require 'path'
+
+getCssParser = ->
+  dirs = SLOW._config_.common?.lessImportDiretory or []
+  dirs = [].concat(dirs)
+  queue = []
+  queue.push _path.join(process.cwd(), dir) for dir in dirs
+  new(_less.Parser)(paths: queue)
+
+cssParser = getCssParser()
 
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
@@ -33,8 +43,12 @@ module.exports = (req, resp, next)->
 
   #文件编译
   queue.push (content, cb)->
-    _less.render(content, (e, css)->
-      cb e, css
+    cssParser.parse(content, (e, css)->
+      if e
+        console.log e
+        cb(e)
+      else
+        cb(e, css.toCSS())
     )
 
   #请求响应

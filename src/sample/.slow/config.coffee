@@ -27,3 +27,5 @@ module.exports =
   ###项目打包时会读取该选项的配置###
   "build": require './build-config'
   "WebGlobal": require './web-global'
+  "common": #开发， 产品， 构建通用的配置
+    "lessImportDiretory": ["css"] #less import指令 扫描的目录  #基于项目根目录的相对路径

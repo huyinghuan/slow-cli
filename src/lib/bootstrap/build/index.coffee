@@ -37,6 +37,7 @@ doBuildIgnore = (filename, buildFilename, next)->
 doBuildCopy = (filename, buildFilename, next)->
   #原始文件名和处理后的文件名一致， 则没有经过处理
   return if buildFilename isnt filename
+  console.log "do copy #{filename}"
   buildTargetFilePath =  _path.join $buildTarget, filename
   _fse.copySync filename, buildTargetFilePath
 

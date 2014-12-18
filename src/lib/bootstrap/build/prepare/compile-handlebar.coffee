@@ -9,6 +9,7 @@ $buildTarget = SLOW._config_.build.target
 #编译hbs
 module.exports = (filename, buildFilename, next)->
   factory = (filename)->
+    console.log "Handlebar parse #{filename}"
     buildTargetFilename = _utils_file.replaceFileExt filename, "html"
     buildTargetFilePath = _path.join $buildTarget, buildTargetFilename
     #自动生成文件目录

@@ -27,7 +27,10 @@
 
     /*项目打包时会读取该选项的配置 */
     "build": require('./build-config'),
-    "WebGlobal": require('./web-global')
+    "WebGlobal": require('./web-global'),
+    "common": {
+      "lessImportDiretory": ["css"]
+    }
   };
 
 }).call(this);
