@@ -43,7 +43,7 @@
     "glob": "^4.0.5",
     "handlebars": "^2.0.0-beta.1",
     "http-proxy": "^1.7.3",
-    "less": "^1.7.5",
+    "less": "^2.1.1",
     "lodash": "^2.4.1",
     "log4slow": "0.1.0",
     "mime": "^1.2.11",
