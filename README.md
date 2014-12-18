@@ -28,7 +28,7 @@ slow init
 ##Take over and starup a http server   
 ```shell
 #In the project directory run.
-slow
+slow start
 #And then open the browser with http://localhost:3000
 ```    
 ## Enjoy your develop!
@@ -172,7 +172,7 @@ the port that be `slow`used.default is `3000`.
 ##slow init
 ##slow build
 ##slow update
-##slow
+##slow start
 ### slow -p [port]
 ### slow -env [develop | product]
 
@@ -192,6 +192,11 @@ the port that be `slow`used.default is `3000`.
   MIT
 
 ## History
+v0.1.9beta3
+
+1. fix bug that can not build project less.
+2. modify the start way from ```slow``` to ```slow start```. Avoid conflict with other shell commander
+
 v0.1.9beta1
 
 1. catch the error when compile  coffeescript and hbs file. avoid the ```slow``` crash.

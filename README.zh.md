@@ -18,7 +18,7 @@ slow init
 
 之后运行
 ```
-slow
+slow start
 ```
 就可以跑起来了。 默认端口是3000.
 

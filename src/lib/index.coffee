@@ -16,6 +16,7 @@ _program.version(version)
     'develop or product')
   .option('build', "build project as a web project and " +
     "can don't depend on slow-cli anymore ")
+  .option('start', 'start slow server')
   .option('update', 'update')
   .parse(process.argv);
 
@@ -36,5 +37,6 @@ if not _fs.existsSync SLOW.$currentDefaultConfigFilePath
 #更新全局变量
 sload('global')(_program, current, version)
 
-#启动Slow
-require './app'
+if _program.start
+  #启动Slowb
+  require './app'

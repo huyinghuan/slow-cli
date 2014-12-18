@@ -31,4 +31,3 @@ module.exports = (program, next)->
   allFiles = _utils_file.getAllFile $current
   buildFile filename for filename in allFiles
   console.log 'Build complete!'.green
-  end()
