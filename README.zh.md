@@ -45,7 +45,8 @@ slow start
 
 ### 指令
 
-在hbs 文件中支持 include 和import 指令。
+仅在```.hbs``` 文件中支持 include 和import 指令。 html文件不支持。 这点主要是考虑到某些前端mvc框架如angularjs
+有自己的模板引擎，其中的引用符号会有冲突，导致无法正确解析文件。
 
 
 #### include
@@ -72,7 +73,7 @@ b.hbs
 </body>
 ```
 
-### import
+#### import
 
 import指令主要用于引用 css 和js 文件
 
@@ -87,6 +88,11 @@ import指令主要用于引用 css 和js 文件
 
 这个指令支持css和js文件资源的自动引入。 包括 less 和 coffee
 
+#### watch_file
+
+watch_file 指令使用来 监测 文件变化 从而自动刷新浏览器的。也就是 livereload功能。
+
+在你需要的自动刷新的页面加上 指令 {{watch_file}} 即可。
 
 ### proxy代理
 
