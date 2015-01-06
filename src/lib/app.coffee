@@ -14,9 +14,13 @@ server = _http.createServer(
 #初始化文件监控
 initWatchFile = ()->
   _io = require('socket.io')(server)
-
-  _utils_file.watch ()->
-    _io.sockets.emit 'file-change'
+  _utils_file.watch (filePath)->
+    filePath = filePath.replace(SLOW.cwd, '')
+    filePath = filePath.replace(/\.hbs$/, '.html')
+    filePath = filePath.replace(/\.less/, '.css')
+    filePath = filePath.replace(/\.coffee$/, '.js')
+    filePath = '/' if filePath is "/#{SLOW.base.index}"
+    _io.sockets.emit 'file-change', filePath
 
 #生产环境中不建设文件变化
 if not SLOW.isProduct()

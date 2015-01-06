@@ -44,7 +44,7 @@ File.watch  = (cb)->
   cwd = SLOW.cwd
   watcher = _chokidar.watch(cwd, options)
   watcher.on('change', (path)->
-    cb and cb()
+    cb and cb(path)
   )
 
 #获取通配符匹配的文件名

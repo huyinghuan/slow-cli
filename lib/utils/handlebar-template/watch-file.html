@@ -1,7 +1,46 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io(window.location.origin);
+  var refreshAssets;
   socket.on('file-change', function (data) {
-    window.location.reload()
+    if(window.location.pathname === data){
+      window.location.reload()
+    }else{
+      refreshAssets(data)
+    }
   });
+  refreshAssets = function(data){
+    console.log(data)
+    var ext = data.replace(/.*\.(js|css)$/, '$1');
+    var selector, tagAttrs;
+    if(ext === 'js'){
+      selector = 'script';
+      tagAttrs = 'src'
+    }else if(ext === 'css'){
+      selector = 'link[type="text/css"]';
+      tagAttrs = 'href'
+    }else{
+      selector = false;
+    }
+
+    if(!selector) return;
+    console.log(selector);
+    var nodes = document.querySelectorAll(selector);
+    console.log(nodes);
+    for(var i = 0, length = nodes.length; i < length; i++){
+      var node = nodes[i];
+      var attr = node[tagAttrs];
+      console.log(attr, data);
+      if(!attr || attr.indexOf(data) === -1){
+        continue;
+      }
+      var query = "?refreshTime=" + new Date().getTime()
+      if(attr.indexOf('?') === -1){
+        node[tagAttrs] = attr + query
+      }else{
+        node[tagAttrs] = attr.replace(/refreshTime=.*$/, '') + query
+      }
+
+    }
+  }
 </script>
