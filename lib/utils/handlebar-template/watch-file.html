@@ -6,12 +6,11 @@
     if(window.location.pathname === data){
       window.location.reload()
     }else{
-      refreshAssets(data)
+      refreshAssets(data, function(){window.location.reload()})
     }
   });
-  refreshAssets = function(data){
-    console.log(data)
-    var ext = data.replace(/.*\.(js|css)$/, '$1');
+  refreshAssets = function(data, cb){
+    var ext = data.replace(/.*\.(js|css|png|gif|jpg|jpeg|ico)$/, '$1');
     var selector, tagAttrs;
     if(ext === 'js'){
       selector = 'script';
@@ -19,28 +18,35 @@
     }else if(ext === 'css'){
       selector = 'link[type="text/css"]';
       tagAttrs = 'href'
+    }else if("png,gif,jpg,jpeg,ico".indexOf(ext) !== -1){
+      selector = 'img';
+      tagAttrs = 'src';
     }else{
       selector = false;
     }
-
     if(!selector) return;
-    console.log(selector);
     var nodes = document.querySelectorAll(selector);
-    console.log(nodes);
+    var hasMatch = false;
     for(var i = 0, length = nodes.length; i < length; i++){
       var node = nodes[i];
       var attr = node[tagAttrs];
-      console.log(attr, data);
       if(!attr || attr.indexOf(data) === -1){
         continue;
       }
-      var query = "?refreshTime=" + new Date().getTime()
-      if(attr.indexOf('?') === -1){
-        node[tagAttrs] = attr + query
-      }else{
-        node[tagAttrs] = attr.replace(/refreshTime=.*$/, '') + query
+      if(selector === 'script'){
+        cb && cb();
+        continue;
       }
-
+      var query = "refreshTime=" + new Date().getTime();
+      if(attr.indexOf('?') === -1){
+        node[tagAttrs] = attr + "?" + query
+      }else{
+        node[tagAttrs] = attr.replace(/&?refreshTime=.*$/, '') + "&" + query
+      }
+      hasMatch = true
+    }
+    if(!hasMatch){
+      cb && cb();
     }
   }
 </script>

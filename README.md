@@ -192,6 +192,12 @@ the port that be `slow`used.default is `3000`.
   MIT
 
 ## History
+v0.1.9beta5
+
+1. finish function #9 . Reload css, image file without refresh page when watch file chage. 
+(only support file from directive ```import``` or tag.  the assets in direcive
+```include``` don't support)
+
 v0.1.9beta3
 
 1. fix bug that can not build project less.
