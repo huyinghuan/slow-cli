@@ -27,6 +27,9 @@ module.exports = (program, next)->
   return next() if not program.build
   console.log 'Building...'.blue
   return end() if not checkLegalProject(program)
+  console.log program.compile, program.output
+  return
+
   #文件处理
   allFiles = _utils_file.getAllFile $current
   buildFile filename for filename in allFiles

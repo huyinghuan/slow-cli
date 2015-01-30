@@ -14,6 +14,8 @@ _program.version(version)
   .option('-p, --port <n>', 'slow run in port <n>')
   .option('-e, --env [value]', 'the environment that slow working,' +
     'develop or product')
+  .option('-c, --compile [value]', 'compile source directory')
+  .option('-o, --output [value]', 'output directory after compiled')
   .option('build', "build project as a web project and " +
     "can don't depend on slow-cli anymore ")
   .option('start', 'start slow server')
