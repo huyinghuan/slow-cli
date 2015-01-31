@@ -21,7 +21,7 @@
     "url": "https://gist.githubusercontent.com/huyinghuan/a03ffed8877dc6822275/raw/4a78514616df437e15daa5a010ade50f5e882e7c/LICENSE"
   },
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 0.10.33"
   },
   "bin": {
     "slow": "./bin/index"
@@ -33,23 +33,24 @@
     "request": "^2.40.0"
   },
   "dependencies": {
-    "async": "^0.9.0",
+    "async": "latest",
     "chokidar": "^0.8.4",
     "clean-css": "^2.2.16",
-    "coffee-script": "",
-    "colors": "^0.6.2",
-    "commander": "",
-    "fs-extra": "",
-    "glob": "^4.0.5",
-    "handlebars": "^2.0.0-beta.1",
-    "http-proxy": "^1.7.3",
-    "less": "^2.1.1",
-    "lodash": "^2.4.1",
+    "coffee-script": "latest",
+    "colors": "latest",
+    "commander": "latest",
+    "fs-extra": "latest",
+    "glob": "latest",
+    "handlebars": "latest",
+    "http-proxy": "~1.7.3",
+    "less": "~2.1.1",
+    "lodash": "latest",
     "log4slow": "0.1.0",
-    "mime": "^1.2.11",
+    "mime": "~1.2.11",
+    "path-judge": "0.0.2",
     "sload": "latest",
-    "socket.io": "^1.1.0",
-    "uglify-js": "^2.4.15"
+    "socket.io": "~1.1.0",
+    "uglify-js": "~2.4.15"
   },
   "scripts": {
     "prepublish": "coffee --no-header -o ./ -c src/"

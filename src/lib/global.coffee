@@ -1,19 +1,49 @@
 _path = require 'path'
 _fs = require 'fs'
+#slow-cli的相关文件夹文件名的设置
 $identity = ".slow"
 $identityFile = "config.js"
+
 $identityFilePath = _path.join $identity, $identityFile
-$defaultConfigFilePath = _path.join __dirname, "..", "sample", $identityFilePath
-$defaultConfigDirectoryPath = _path.join __dirname, "..", "sample", $identity
-$currentDefaultConfigFilePath = _path.join process.cwd(), $identityFilePath
-$currentDefaultConfigDirectoryPath = _path.join process.cwd(), $identity
+
+#默认配置的位置
+$defaultConfigFilePath = _path.resolve __dirname, "../sample", $identityFilePath
+$defaultConfigDirectoryPath = _path.resolve __dirname, "../sample", $identity
+
+#默认demo的文件夹位置
+$defaultDemoDirectory = __path.resolve __dirname, "../sample"
+
+#默认运行时文件夹
+$defaultRuntimeDirectory = process.cwd()
+
+#默认运行时的配置文件位置
+$defaultRuntimeConfigureFilePath = _path.join $defaultRuntimeDirectory, $identityFilePath
+
+#$currentDefaultConfigFilePath = _path.join process.cwd(), $identityFilePath
+#$currentDefaultConfigDirectoryPath = _path.join process.cwd(), $identity #用于拷贝配置文件
+
+
+
 #全局变量
-module.exports = (program, current, version)->
-  #获取slow的配置
-  configFilePath = _path.join current, $identityFilePath
-  if not _fs.existsSync configFilePath
-    configFilePath = $defaultConfigFilePath
-  config = require configFilePath
+module.exports = (program, setting)->
+
+  runtimeDirectory = setting.runtimeDirectory or $defaultRuntimeDirectory
+  runtimeConfigureFilePath = setting.runtimeConfigureFilePath or $defaultRuntimeConfigureFilePath
+
+  #如果配置文件不存在，那么则表示运行的是 demo
+  if not _fs.existsSync runtimeConfigureFilePath
+    #获取demo的文件夹
+    runtimeDirectory = $defaultDemoDirectory
+    #获取demo的配置文件
+    runtimeConfigureFilePath = $defaultConfigFilePath
+    console.log "you have not done init slow in project " +
+      "please run slow init in the project directory \n" +
+      "or set the project directory by 'slow -r project-path' \n" +
+      "more information run 'slow help'".yellow
+
+  console.log "slow run in #{runtimeDirectory}".blue
+
+  config = require runtimeConfigureFilePath
 
   #开发模式 or 生产模式?
   env = program.env or config.environment
@@ -21,10 +51,10 @@ module.exports = (program, current, version)->
   configEnv = config[env]
   global.SLOW =
     _config_: config #全局配置
+    #下面是slow start需要的相关配置
     _env_: config[env] #工作环境配置
-    _def_config_path_: $defaultConfigFilePath #默认配置文件路径
     port: program.port or configEnv.port #运行的端口配置
-    cwd: current #slow 当前工作目录
+    cwd: runtimeDirectory #slow 当前工作目录
     base: configEnv.base
     proxy: configEnv.proxy #代理配置
     env: env #当前工作环境
