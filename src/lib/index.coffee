@@ -25,5 +25,7 @@ _program.version(version)
   .option('update', 'update')
   .parse(process.argv);
 
+#更新全局变量
+sload('global')(_program)
 #slow 可选操作
 sload('bootstrap/index')(_program)

@@ -72,29 +72,67 @@ initInitGlobalConfig = (program, setting)->
     $currentDefaultConfigDirectoryPath: _path.join runtimeDirectory, $identity
     $defaultConfigDirectoryPath: $defaultConfigDirectoryPath #默认配置文件存储的文件夹
 
+initBuildGlobalConfig = (program, setting)->
+  #1.获取需要编译的文件夹
+  #2.获取编译配置
+  #3.获取编输出文件夹
+  #4.设置全局变量
+
+  #1.获取需要编译的文件夹
+
+  if program.source
+    compileDir =  _pathJudge.getFilePathBaseOnProcess(program.source)
+  else
+    compileDir = setting.runtimeDirectory
+
+  #2.获取编译配置
+  #是否已经指定编译配置文件
+  if program.buildConfigure
+    buildConfigureFile = _pathJudge.getFilePathBaseOnProcess buildConfigure
+  #是否指定了项目配置文件，如果制定，则从中读取相关配置
+  else if program.configure
+    buildConfigureFile = _pathJudge.getFilePathBaseOnProcess program.configure
+  #是否工作目录下已经包好了配置文件
+  else if _fs.existsSync(currentConfigureFilePath = _path.join(compileDir, $identityFilePath))
+    buildConfigureFile = currentConfigureFilePath
+  #读取默认配置
+  else
+    buildConfigureFile = $defaultConfigFilePath
+
+  configure = require(buildConfigureFile)
+
+  buildConfigure = configure.build or configure
+
+  #获取编输出文件夹
+  if program.output
+    buildConfigure.target = _pathJudge.getFilePathBaseOnProcess(program.output)
+
+  console.log "Now compile config is #{buildConfigureFile}"
+  console.log "Now compile project in #{compileDir}"
+
+
+  global.SLOW =
+    cwd: compileDir
+    build: buildConfigure
+
+
 #全局变量
 module.exports = (program)->
-
   #运行时配置文件路径
   runtimeConfigureFilePath = false
-
   #运行时目录
   runtimeDirectory = false
-
   #是否指定运行时目录
   if program.workspace
     runtimeDirectory = _pathJudge.getFilePathBaseOnProcess(program.workspace)
-
   #如果指定运行时配置文件
   if program.configure
     runtimeConfigureFilePath = _pathJudge.getFilePathBaseOnProcess(program.configure)
 
   #读取工作目录
   runtimeDirectory = runtimeDirectory or $defaultRuntimeDirectory
-
   #设置默认运行时配置文件路径
   $defaultRuntimeConfigureFilePath = _path.join runtimeDirectory, $identityFilePath
-
   #获取实际运行时文件配置路径
   runtimeConfigureFilePath = runtimeConfigureFilePath or $defaultRuntimeConfigureFilePath
 
