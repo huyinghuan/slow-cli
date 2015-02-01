@@ -1,4 +1,5 @@
 _path = require 'path'
+_pathJudge = require 'path-judge'
 _fs = require 'fs'
 #slow-cli的相关文件夹文件名的设置
 pkg =  _path.resolve __dirname, '../package.json'
@@ -12,32 +13,20 @@ $identityFilePath = _path.join $identity, $identityFile
 #默认配置的位置
 $defaultConfigFilePath = _path.resolve __dirname, "../sample", $identityFilePath
 $defaultConfigDirectoryPath = _path.resolve __dirname, "../sample", $identity
-
 #默认demo的文件夹位置
 $defaultDemoDirectory = _path.resolve __dirname, "../sample"
-
-#默认运行时文件夹
+#默认运行时文件夹 为 进程目录
 $defaultRuntimeDirectory = process.cwd()
-
 #默认运行时的配置文件位置
 $defaultRuntimeConfigureFilePath = false
 
-#$currentDefaultConfigFilePath = _path.join process.cwd(), $identityFilePath
-#$currentDefaultConfigDirectoryPath = _path.join process.cwd(), $identity #用于拷贝配置文件
 
-
-
-#全局变量
-module.exports = (program, setting)->
-
+#初始化运行时需要的全局变量
+initRuntimeGlobalConfig = (program, setting)->
   #读取工作目录
-  runtimeDirectory = setting.runtimeDirectory or $defaultRuntimeDirectory
-
-  #设置默认运行时配置文件路径
-  $defaultRuntimeConfigureFilePath = _path.join runtimeDirectory, $identityFilePath
-
+  runtimeDirectory = setting.runtimeDirectory
   #获取实际运行时文件配置路径
-  runtimeConfigureFilePath = setting.runtimeConfigureFilePath or $defaultRuntimeConfigureFilePath
+  runtimeConfigureFilePath = setting.runtimeConfigureFilePath
 
   #如果配置文件不存在，那么则表示运行的是 demo
   if not _fs.existsSync runtimeConfigureFilePath
@@ -59,6 +48,7 @@ module.exports = (program, setting)->
   env = program.env or config.environment
   #读取相应环境配置
   configEnv = config[env]
+
   global.SLOW =
     _config_: config #全局配置
     #下面是slow start需要的相关配置
@@ -70,9 +60,51 @@ module.exports = (program, setting)->
     env: env #当前工作环境
     log: configEnv.log #日志配置
     version: version #当前版本
-    #下面是slow init需要的配置
-    $defaultConfigFilePath: $defaultConfigFilePath #默认主配置文件路径
-    $defaultConfigDirectoryPath: $defaultConfigDirectoryPath #默认配置文件存储的文件夹
-   # $currentDefaultConfigFilePath: $currentDefaultConfigFilePath
-  #  $currentDefaultConfigDirectoryPath: $currentDefaultConfigDirectoryPath #运行环境中配置文件的文件夹
     isProduct: -> env is 'product'
+
+#初始化 初始化项目需要的全局变量
+initInitGlobalConfig = (program, setting)->
+  #读取工作目录
+  runtimeDirectory = setting.runtimeDirectory
+  global.SLOW =
+    #初始化时，配置文件应该存放的文件路径
+    $currentDefaultConfigFilePath: _path.join runtimeDirectory, $identityFilePath
+    $currentDefaultConfigDirectoryPath: _path.join runtimeDirectory, $identity
+    $defaultConfigDirectoryPath: $defaultConfigDirectoryPath #默认配置文件存储的文件夹
+
+#全局变量
+module.exports = (program)->
+
+  #运行时配置文件路径
+  runtimeConfigureFilePath = false
+
+  #运行时目录
+  runtimeDirectory = false
+
+  #是否指定运行时目录
+  if program.workspace
+    runtimeDirectory = _pathJudge.getFilePathBaseOnProcess(program.workspace)
+
+  #如果指定运行时配置文件
+  if program.configure
+    runtimeConfigureFilePath = _pathJudge.getFilePathBaseOnProcess(program.configure)
+
+  #读取工作目录
+  runtimeDirectory = runtimeDirectory or $defaultRuntimeDirectory
+
+  #设置默认运行时配置文件路径
+  $defaultRuntimeConfigureFilePath = _path.join runtimeDirectory, $identityFilePath
+
+  #获取实际运行时文件配置路径
+  runtimeConfigureFilePath = runtimeConfigureFilePath or $defaultRuntimeConfigureFilePath
+
+  setting =
+    runtimeDirectory: runtimeDirectory
+    runtimeConfigureFilePath: runtimeConfigureFilePath
+
+  if program.start
+    initRuntimeGlobalConfig(program, setting)
+  else if program.init
+    initInitGlobalConfig(program, setting)
+  else if program.build
+    initBuildGlobalConfig(program, setting)

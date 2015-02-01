@@ -173,9 +173,26 @@ the port that be `slow`used.default is `3000`.
 ##slow build
 ##slow update
 ##slow start
-### slow -p [port]
-### slow -env [develop | product]
+for example:
+```
+slow start -p [port]
+slow start -env [develop | product]
+```
+more configure please see ```slow -h```
 
+```
+  ('init', 'init a slow project')
+  ('-p, --port <n>', 'slow run in port <n>')
+  ('-e, --env [value]', 'the environment that slow working as develop or product')
+  ('-s, --source [value]', 'compile source directory')
+  ('-o, --output [value]', 'output directory after compiled')
+  ('-c, --configure [value]', 'the configure file')
+  ('-b, --buildConfigure [value]', 'the configure for build')
+  ('-w, --workspace [value]', 'the project workspace')
+  ('build', "build project as a web project and don't need depend on slow-cli anymore ")
+  ('start', 'start slow server')
+  ('update', 'update')`
+```
 # Feature
 
 1. support less
@@ -192,6 +209,10 @@ the port that be `slow`used.default is `3000`.
   MIT
 
 ## History
+
+v0.2.0beta1
+1. add more runtime and build options.
+
 v0.1.9beta5
 
 1. finish function #9 . Reload css, image file without refresh page when watch file chage. 

@@ -38,10 +38,24 @@ slow start
 路径代理， 那么nginx需要进行相应配置才行。
 
 
-### slow
+### slow start
 
 将项目 运行在http 服务内（slow 自带）， 可以通过 -p 指定端口， 通过 -dev 指定运行环境
+更多的配置选项可以通过 ```slow -h``` 来查看
 
+```
+  ('init', '初始一个slow项目')
+  ('-p, --port <n>', '指定运行端口')
+  ('-e, --env [value]', '指定运行时环境')
+  ('-s, --source [value]', '构建项目时，指定 项目的文件夹路径')
+  ('-o, --output [value]', '制定项目构建后的输出路径')
+  ('-c, --configure [value]', '使用指定的slow 配置文件运行项目')
+  ('-b, --buildConfigure [value]', '使用指定的配置文件进行项目构建')
+  ('-w, --workspace [value]', '指定运行时目录')
+  ('build', "构建工程")
+  ('start', '启动slow服务')
+  ('update', '更新slow')`
+```
 
 ### 指令
 
