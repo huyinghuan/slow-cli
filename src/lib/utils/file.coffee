@@ -9,9 +9,6 @@ _fs = require 'fs'
 
 _util_string = require './String'
 
-_isGzip = SLOW.base.gzip
-_isWatch = SLOW.base.isWatchFile
-
 File = module.exports = {}
 
 #可压缩文件类型 队列
@@ -30,12 +27,12 @@ File.getFilePath = (relativePath)->
 
 #判断文件是否可压缩
 File.compressible = (fileMime)->
-  return false if not _isGzip
+  return false if not SLOW.base.gzip
   return true for mime in compressibleQueue when fileMime is mime
   return false
 
 File.watch  = (cb)->
-  return if not _isWatch
+  return if not SLOW.base.isWatchFile
   console.log 'watch file is working...'
   #watch file
   options =

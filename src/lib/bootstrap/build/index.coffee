@@ -3,8 +3,13 @@ _fse = require 'fs-extra'
 _path = require 'path'
 _ = require 'lodash'
 _sload = require 'sload'
-$config = SLOW._config_.build
-$buildTarget = SLOW._config_.build.target
+
+$config = false
+$buildTarget = false
+
+initVariable = ->
+  $config = SLOW._config_.build
+  $buildTarget = SLOW._config_.build.target
 
 getModuleList = ->
   queue = []
@@ -43,6 +48,7 @@ doBuildCopy = (filename, buildFilename, next)->
 
 #通用的文件处理
 exports.doBuildCommon = (filename, buildFilename, buildConfig, next, factory)->
+  initVariable()
   #配置文件不存在
   return next filename, buildFilename if not $config[buildConfig]
   buildConfig = prepareConfig $config[buildConfig]
@@ -64,6 +70,7 @@ exports.doBuildCommon = (filename, buildFilename, buildConfig, next, factory)->
   factory filename
 
 exports.getPipeList = ->
+  initVariable()
   list = [doBuildIgnore]
   list = list.concat getModuleList()
   list = list.concat doBuildCopy

@@ -8,11 +8,13 @@ _less = require 'less'
 _async = require 'async'
 _path = require 'path'
 
+runtimeCwd = SLOW.cwd
+
 getCssParserOptions = ->
   dirs = SLOW._config_.common?.lessImportDiretory or []
   dirs = [].concat(dirs)
   queue = []
-  queue.push _path.join(process.cwd(), dir) for dir in dirs
+  queue.push _path.join(runtimeCwd, dir) for dir in dirs
 
   return paths: queue
 

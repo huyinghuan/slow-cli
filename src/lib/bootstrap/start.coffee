@@ -3,8 +3,6 @@ _pathJudge = require 'path-judge'
 module.exports = (program, next)->
   return next() if not program.start
 
-  configureFile = false #默认不指定
-
   #配置文件路径
   configureFilePath = false
 
@@ -24,6 +22,5 @@ module.exports = (program, next)->
     runtimeDirectory: runtimeDirectory
     runtimeConfigureFilePath: configureFilePath
   })
-
 
   sload('app')

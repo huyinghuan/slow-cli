@@ -1,6 +1,9 @@
 _path = require 'path'
 _fs = require 'fs'
 #slow-cli的相关文件夹文件名的设置
+pkg =  _path.resolve __dirname, '../package.json'
+version = require(pkg).version
+
 $identity = ".slow"
 $identityFile = "config.js"
 
@@ -11,13 +14,13 @@ $defaultConfigFilePath = _path.resolve __dirname, "../sample", $identityFilePath
 $defaultConfigDirectoryPath = _path.resolve __dirname, "../sample", $identity
 
 #默认demo的文件夹位置
-$defaultDemoDirectory = __path.resolve __dirname, "../sample"
+$defaultDemoDirectory = _path.resolve __dirname, "../sample"
 
 #默认运行时文件夹
 $defaultRuntimeDirectory = process.cwd()
 
 #默认运行时的配置文件位置
-$defaultRuntimeConfigureFilePath = _path.join $defaultRuntimeDirectory, $identityFilePath
+$defaultRuntimeConfigureFilePath = false
 
 #$currentDefaultConfigFilePath = _path.join process.cwd(), $identityFilePath
 #$currentDefaultConfigDirectoryPath = _path.join process.cwd(), $identity #用于拷贝配置文件
@@ -27,7 +30,13 @@ $defaultRuntimeConfigureFilePath = _path.join $defaultRuntimeDirectory, $identit
 #全局变量
 module.exports = (program, setting)->
 
+  #读取工作目录
   runtimeDirectory = setting.runtimeDirectory or $defaultRuntimeDirectory
+
+  #设置默认运行时配置文件路径
+  $defaultRuntimeConfigureFilePath = _path.join runtimeDirectory, $identityFilePath
+
+  #获取实际运行时文件配置路径
   runtimeConfigureFilePath = setting.runtimeConfigureFilePath or $defaultRuntimeConfigureFilePath
 
   #如果配置文件不存在，那么则表示运行的是 demo
@@ -36,10 +45,11 @@ module.exports = (program, setting)->
     runtimeDirectory = $defaultDemoDirectory
     #获取demo的配置文件
     runtimeConfigureFilePath = $defaultConfigFilePath
-    console.log "you have not done init slow in project " +
-      "please run slow init in the project directory \n" +
-      "or set the project directory by 'slow -r project-path' \n" +
-      "more information run 'slow help'".yellow
+
+    console.log "you have not init slow, " +
+      "please run 'slow init' in the project directory \n" +
+      "or set the project directory by 'slow -r path/to/project' \n" +
+      "more information run 'slow -h'".yellow
 
   console.log "slow run in #{runtimeDirectory}".blue
 
@@ -60,8 +70,9 @@ module.exports = (program, setting)->
     env: env #当前工作环境
     log: configEnv.log #日志配置
     version: version #当前版本
+    #下面是slow init需要的配置
     $defaultConfigFilePath: $defaultConfigFilePath #默认主配置文件路径
     $defaultConfigDirectoryPath: $defaultConfigDirectoryPath #默认配置文件存储的文件夹
-    $currentDefaultConfigFilePath: $currentDefaultConfigFilePath
-    $currentDefaultConfigDirectoryPath: $currentDefaultConfigDirectoryPath #运行环境中配置文件的文件夹
+   # $currentDefaultConfigFilePath: $currentDefaultConfigFilePath
+  #  $currentDefaultConfigDirectoryPath: $currentDefaultConfigDirectoryPath #运行环境中配置文件的文件夹
     isProduct: -> env is 'product'
