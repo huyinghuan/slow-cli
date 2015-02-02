@@ -58,7 +58,7 @@ File.getAllFile = (dir, filesQueue)->
   files = _fs.readdirSync(dir)
   for i of files
     continue  unless files.hasOwnProperty(i)
-    name = dir + "/" + files[i]
+    name = _path.resolve dir, files[i]
     if _fs.statSync(name).isDirectory()
       File.getAllFile name, filesQueue
     else

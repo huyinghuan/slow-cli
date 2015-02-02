@@ -5,18 +5,8 @@ _fs = require 'fs'
 _async = require 'async'
 _utils_file = sload 'utils/file'
 _doBuildCommon = sload('bootstrap/build/index').doBuildCommon
-$cwd = process.cwd()
-$buildTarget = SLOW._config_.build.target
-
-getCssParserOptions = ->
-  dirs = SLOW._config_.common?.lessImportDiretory or []
-  dirs = [].concat(dirs)
-  queue = []
-  queue.push _path.join(process.cwd(), dir) for dir in dirs
-
-  return paths: queue
-
-cssParserOption = getCssParserOptions()
+$cwd = SLOW.cwd
+$buildTarget = SLOW.build.target
 
 #编译less
 module.exports = (filename, buildFilename, next)->
@@ -26,6 +16,9 @@ module.exports = (filename, buildFilename, next)->
     buildTargetFilePath = _path.join $buildTarget, buildTargetFilename
     _fse.ensureFileSync buildTargetFilePath
 
+    #获取import路径
+    cssParserOption = paths: [_path.resolve($cwd, _path.dirname(filename))]
+    console.log cssParserOption
     queue = []
 
     queue.push (cb)->

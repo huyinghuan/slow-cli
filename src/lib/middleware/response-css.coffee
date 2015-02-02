@@ -8,18 +8,9 @@ _less = require 'less'
 _async = require 'async'
 _path = require 'path'
 
-runtimeCwd = SLOW.cwd
+$cwd = SLOW.cwd
 
-getCssParserOptions = ->
-  dirs = SLOW._config_.common?.lessImportDiretory or []
-  dirs = [].concat(dirs)
-  queue = []
-  queue.push _path.join(runtimeCwd, dir) for dir in dirs
-
-  return paths: queue
-
-cssParserOption = getCssParserOptions()
-
+cssParserOption =
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
   mime = _mime.lookup(pathName)
@@ -34,8 +25,11 @@ module.exports = (req, resp, next)->
   #如果文件不存在，替换成less继续尝试
   filePath = filePath.replace(/(\.css)$/, '.less')
 
-  #如果 coffee 也不存在
+  #如果 less 也不存在
   next() if not _fs.existsSync filePath
+
+  #获取import路径
+  cssParserOption = paths: [_path.resolve($cwd, _path.dirname(filePath))]
 
   queue = []
 

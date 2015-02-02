@@ -5,7 +5,7 @@ _ = require 'lodash'
 _sload = require 'sload'
 
 $config = SLOW.build
-$buildTarget = SLOW.build.target
+$buildTarget = SLOW.build?.target
 
 getModuleList = ->
   queue = []

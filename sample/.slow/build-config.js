@@ -1,5 +1,7 @@
 (function() {
   module.exports = {
+    "version": "",
+    "WebGlobal": require('./web-global'),
     "target": "build",
 
     /*

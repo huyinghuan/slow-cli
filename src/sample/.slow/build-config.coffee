@@ -1,4 +1,6 @@
 module.exports =
+  "version": "" #编译的工程版本 #当读使用编译工程配置文件时 需要指定
+  "WebGlobal": require './web-global'  #编译的工程全局变量 #当读使用编译工程配置文件时 需要指定
   "target": "build" #打包文件存放的文件夹.支持绝对路径和相对路径(相对于运行slow的根目录)
   ###
   以下配置(出最后一个ignore外)的值均为一个对象，包含 include 和 ignore 字段。

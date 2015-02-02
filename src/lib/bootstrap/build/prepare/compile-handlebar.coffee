@@ -3,8 +3,8 @@ _handlebar = sload 'utils/handlebar'
 _fse = require 'fs-extra'
 _utils_file = sload 'utils/file'
 _doBuildCommon = sload('bootstrap/build/index').doBuildCommon
-$cwd = process.cwd()
-$buildTarget = SLOW._config_.build.target
+$cwd = SLOW.cwd
+$buildTarget = SLOW.build.target
 
 #编译hbs
 module.exports = (filename, buildFilename, next)->

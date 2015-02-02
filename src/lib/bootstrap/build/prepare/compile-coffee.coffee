@@ -5,8 +5,8 @@ _fse = require 'fs-extra'
 _fs = require 'fs'
 _utils_file = sload 'utils/file'
 _doBuildCommon = sload('bootstrap/build/index').doBuildCommon
-$cwd = process.cwd()
-$buildTarget = SLOW._config_.build.target
+$cwd = SLOW.cwd
+$buildTarget = SLOW.build.target
 
 module.exports = (filename, buildFilename, next)->
   factory = (filename)->

@@ -24,5 +24,3 @@ module.exports = (req, resp, next)->
   _utils_handlebar.compileFile filePath, (err, content)->
     return resp.throwsServerError() if err
     resp.sendContent content, mime
-
-

@@ -37,7 +37,7 @@ initRuntimeGlobalConfig = (program, setting)->
 
     console.log "you have not init slow, " +
       "please run 'slow init' in the project directory \n" +
-      "or set the project directory by 'slow -r path/to/project' \n" +
+      "or set the project directory by 'slow -w path/to/project' \n" +
       "more information run 'slow -h'".yellow
 
   console.log "slow run in #{runtimeDirectory}".blue
@@ -50,6 +50,7 @@ initRuntimeGlobalConfig = (program, setting)->
   configEnv = config[env]
 
   global.SLOW =
+    version: config.version #工程版本
     _config_: config #全局配置
     #下面是slow start需要的相关配置
     _env_: config[env] #工作环境配置
@@ -106,12 +107,17 @@ initBuildGlobalConfig = (program, setting)->
   #获取编输出文件夹
   if program.output
     buildConfigure.target = _pathJudge.getFilePathBaseOnProcess(program.output)
+  else
+    buildConfigure.target = _pathJudge.getFilePathBaseOnProcess(buildConfigure.target)
+
 
   console.log "Now compile config is #{buildConfigureFile}"
   console.log "Now compile project in #{compileDir}"
 
 
   global.SLOW =
+    _config_: configure
+    version: buildConfigure.version
     cwd: compileDir
     build: buildConfigure
 
