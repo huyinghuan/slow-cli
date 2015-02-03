@@ -22,6 +22,7 @@ _program.version(version)
   .option('build', "build project as a web project and " +
     "can don't depend on slow-cli anymore ")
   .option('start', 'start slow server')
+  .option('sample', 'run a sample in localhost:3000')
   .option('update', 'update')
   .parse(process.argv);
 

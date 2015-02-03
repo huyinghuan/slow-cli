@@ -23,14 +23,10 @@
         "log2file": false
       }
     },
-    "product": require('./product-config'),
 
     /*项目打包时会读取该选项的配置 */
     "build": require('./build-config'),
-    "WebGlobal": require('./web-global'),
-    "common": {
-      "lessImportDiretory": ["css"]
-    }
+    "WebGlobal": require('./web-global')
   };
 
 }).call(this);
