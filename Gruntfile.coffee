@@ -26,5 +26,14 @@ module.exports = (grunt)->
       _fse.copySync filePath, distFile
   )
 
-  grunt.registerTask('default', ['coffee:build', 'copySample'])
+  grunt.registerTask('copySource', "copy file that is not coffee", ->
+    filesList = _utils.getAllFile(_path.resolve(__dirname, 'src/lib'))
+    for filePath in filesList
+      fileName = filePath.replace(__dirname, "").replace('src/' , '')
+      continue if _path.extname(filePath) is '.coffee'
+      distFile = _path.join(__dirname, fileName)
+      _fse.copySync filePath, distFile
+  )
+
+  grunt.registerTask('default', ['coffee:build', 'copySample', 'copySource'])
 

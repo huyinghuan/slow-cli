@@ -29,8 +29,8 @@ initMiddlewareStack = ()->
   scanMiddleware 'middleware/error'
   scanMiddleware 'middleware/end'
   scanMiddleware 'middleware'
-  scanMiddleware 'middleware/start'
   scanHeadMiddleware()
+  scanMiddleware 'middleware/start'
 
 initMiddlewareStack()
 

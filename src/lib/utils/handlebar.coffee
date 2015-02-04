@@ -44,18 +44,20 @@ compileFileSync = (filePath, context = WebGlobal)->
   template = _Handlebars.compile html
   template(context)
 
-#获取 工具模板文件
 getTemplateContent = (fileName, context = {})->
   filePath = _path.join __dirname, "handlebar-template", fileName
-  filePath = "#{filePath}.html"
   html = compileFileSync filePath, context
-  return new _Handlebars.SafeString html
+  return html
+
+#获取 工具模板文件
+getTemplateHandlebarContent = (fileName, context = {})->
+  return new _Handlebars.SafeString getTemplateContent fileName, context
 
 #文件监视器
 _Handlebars.registerHelper 'watch_file', ()->
   #如果是生产环境则返回空
   return '' if SLOW.isProduct()
-  getTemplateContent "watch-file"
+  getTemplateHandlebarContent "watch-file.html"
 
 #html 文件引用
 _Handlebars.registerHelper 'include', (filePath)->
@@ -71,7 +73,7 @@ _Handlebars.registerHelper 'include', (filePath)->
     filePath = filePath.replace(/(\.html)$/, '.hbs')
     #如果文件还是不存在
     if not _fs.existsSync filePath
-      return getTemplateContent "no-file-found", {filePath: origin_path}
+      return getTemplateHandlebarContent "no-file-found.html", {filePath: origin_path}
 
   html = compileFileSync filePath
   return new _Handlebars.SafeString html
@@ -89,3 +91,5 @@ Handlebar = module.exports = {}
 Handlebar.compileFile = compileFile
 #编译文件 同步
 Handlebar.compileFileSync = compileFileSync
+
+Handlebar.getTemplateContent = getTemplateContent

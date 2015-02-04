@@ -68,3 +68,13 @@ File.getAllFile = (dir, filesQueue)->
 File.replaceFileExt = (filename, ext)->
   return "#{filename}.#{ext}" if filename.indexOf(".") is -1
   filename.substr(0, filename.lastIndexOf('.')) + ".#{ext}"
+
+File.isDir = (pathName)->
+  return false if not _fs.existsSync pathName
+  state = _fs.statSync(pathName)
+  state.isDirectory()
+
+File.isFile = (pathName)->
+  return false if not _fs.existsSync pathName
+  state = _fs.statSync(pathName)
+  state.isFile()
