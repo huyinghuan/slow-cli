@@ -1,6 +1,6 @@
 {
   "name": "slow-cli",
-  "version": "0.2.0beta1",
+  "version": "0.2.0beta2",
   "description": "a web javascript framework",
   "author": "huyinghuan",
   "homepage": "https://github.com/huyinghuan/slow-cli",
@@ -52,6 +52,7 @@
     "uglify-js": "~2.4.15"
   },
   "scripts": {
-    "prepublish": "coffee --no-header -o ./ -c src/"
+    "prepublish": "grunt",
+    "test": "grunt"
   }
 }

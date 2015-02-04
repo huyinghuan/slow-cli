@@ -133,9 +133,54 @@ watch_file 指令使用来 监测 文件变化 从而自动刷新浏览器的。
 
 如： a.coffee 在引用时 写成```<script src="xx/a.js"></script>```即可。less同理。
 
-### 运用
+### 自己扩展slow-cli
 
-芒果tv内部某些属于我的任务中使用。
+#### 假如你不会coffee:
+clone到项目本地后, 进入项目目录运行
+```
+npm install
+npm test
+```
+这样就编译完成slow-cli．
+
+然后在lib目录下编写代码即可．
+
+如何测试本版本？
+
+
+在本地任何一个目录新建一个软连接到```path/to/slow-cli/bin/index```,然后把该目录设置到环境变量里面.
+就可以测试使用slow-cli了．
+
+```
+cd /envirmoent/to/path/
+cp -s path/to/slow-cli/bin/index slow-test
+slow sample #运行demo
+```
+#### 假如你会coffee
+
+clone到项目本地后, 进入项目目录运行
+```
+npm install
+```
+修改 ```/path/to/slow-cli/bin/index```
+为
+```
+#!/usr/bin/env node
+require('../src/lib/index')
+```
+即可．然后在src/lib下编写代码．
+
+如何测试本版本？
+
+
+在本地任何一个目录新建一个软连接到```path/to/slow-cli/bin/index```,然后把该目录设置到环境变量里面.
+就可以测试使用slow-cli了．
+
+```
+cd /envirmoent/to/path/
+cp -s path/to/slow-cli/bin/index slow-test
+slow-test sample #运行demo
+```
 
 ### Bug 与 Suggestion
 
