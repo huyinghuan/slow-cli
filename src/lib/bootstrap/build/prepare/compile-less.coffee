@@ -3,10 +3,19 @@ _less = require 'less'
 _fse = require 'fs-extra'
 _fs = require 'fs'
 _async = require 'async'
+_ = require 'lodash'
+LessPluginAutoPrefix = require 'less-plugin-autoprefix'
+
 _utils_file = sload 'utils/file'
 _doBuildCommon = sload('bootstrap/build/index').doBuildCommon
 $cwd = SLOW.cwd
 $buildTarget = SLOW.build.target
+
+isAutoPrefixer = SLOW.plugins.autoprefixer #是否增加浏览器兼容
+autoprefixPlugin = false
+if isAutoPrefixer
+  options = if _.isPlainObject(isAutoPrefixer) then isAutoPrefixer else {}
+  autoprefixPlugin = new LessPluginAutoPrefix(options)
 
 #编译less
 module.exports = (filename, buildFilename, next)->
@@ -18,7 +27,9 @@ module.exports = (filename, buildFilename, next)->
 
     #获取import路径
     cssParserOption = paths: [_path.resolve($cwd, _path.dirname(filename))]
-    console.log cssParserOption
+    #增加autoprefix插件
+    cssParserOption.plugins = [autoprefixPlugin] if autoprefixPlugin
+
     queue = []
 
     queue.push (cb)->

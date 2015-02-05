@@ -86,6 +86,7 @@ initRuntimeGlobalConfig = (program, setting)->
     env: env #当前工作环境
     log: configEnv.log #日志配置
     version: version #当前版本
+    plugins: configEnv.plugins or {}
     isProduct: -> env is 'product'
 
 #初始化 初始化项目需要的全局变量
@@ -146,6 +147,7 @@ initBuildGlobalConfig = (program, setting)->
     version: buildConfigure.version
     cwd: compileDir
     build: buildConfigure
+    plugins: buildConfigure.plugins
 
 ###
 # slow start, slow build 读取配置文件的顺序是：

@@ -4,13 +4,21 @@
 _mime = require 'mime'
 _utils_file = sload 'utils/file'
 _fs = require 'fs'
+_ = require 'lodash'
 _less = require 'less'
 _async = require 'async'
 _path = require 'path'
 
+LessPluginAutoPrefix = require 'less-plugin-autoprefix'
+
 $cwd = SLOW.cwd
 
-cssParserOption =
+isAutoPrefixer = SLOW.plugins.autoprefixer #是否增加浏览器兼容
+autoprefixPlugin = false
+if isAutoPrefixer
+  options = if _.isPlainObject(isAutoPrefixer) then isAutoPrefixer else {}
+  autoprefixPlugin = new LessPluginAutoPrefix(options)
+
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
   mime = _mime.lookup(pathName)
@@ -30,6 +38,8 @@ module.exports = (req, resp, next)->
 
   #获取import路径
   cssParserOption = paths: [_path.resolve($cwd, _path.dirname(filePath))]
+  #增加autoprefix插件
+  cssParserOption.plugins = [autoprefixPlugin] if autoprefixPlugin
 
   queue = []
 

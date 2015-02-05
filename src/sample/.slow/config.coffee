@@ -23,6 +23,10 @@ module.exports =
       "levelShow": true,
       "lineInfo": false,
       "log2file": false
+    "plugins":
+      "autoprefixer": browsers: ["last 2 versions"]#自动加css前缀
+
+
   ###项目打包时会读取该选项的配置###
   "build": require './build-config'
   "WebGlobal": require './web-global'
