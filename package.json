@@ -35,6 +35,7 @@
     "async": "latest",
     "chokidar": "^0.8.4",
     "clean-css": "^2.2.16",
+    "coffee-react-transform": "^3.0.1",
     "coffee-script": "latest",
     "colors": "latest",
     "commander": "latest",

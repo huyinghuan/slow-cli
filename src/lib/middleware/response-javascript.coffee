@@ -6,6 +6,7 @@ _utils_file = sload 'utils/file'
 _fs = require 'fs'
 _async = require 'async'
 _coffee = require 'coffee-script'
+_cjsxTransform = require 'coffee-react-transform'
 
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
@@ -21,11 +22,18 @@ module.exports = (req, resp, next)->
   #文件存在直接输出文件
   return resp.sendFile filePath if flag
 
+  #如果文件不存在，替换成 cjsx 继续尝试
+  cjsxFilePath = filePath.replace(/(\.js)$/, '.cjsx')
   #如果文件不存在，替换成coffee继续尝试
-  filePath = filePath.replace(/(\.js)$/, '.coffee')
+  coffeeFilePath = filePath.replace(/(\.js)$/, '.coffee')
 
-  #如果 coffee 也不存在
-  next() if not _fs.existsSync filePath
+  if _fs.existsSync cjsxFilePath
+    isCjsxFile = true
+    filePath = cjsxFilePath
+  else if _fs.existsSync coffeeFilePath
+    filePath = coffeeFilePath
+  else #如果 coffee和cjsx 也不存在
+    return next()
 
   queue = []
 
@@ -38,6 +46,7 @@ module.exports = (req, resp, next)->
   queue.push (content, cb)->
     error = null
     try
+      content = _cjsxTransform(content) if isCjsxFile
       compiled = _coffee.compile content
     catch e
       console.error e.toString()

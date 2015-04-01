@@ -209,6 +209,10 @@ more configure please see ```slow -h```
   MIT
 
 ## History
+v0.2.1beta1
+
+1. add cjsx (coffee-react) support.
+  you can use ```.cjsx``` as file's ext  for compile CJSX
 
 v0.2.0beta1
 1. add more runtime and build options.
