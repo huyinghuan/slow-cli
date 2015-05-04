@@ -1,3 +1,8 @@
+###
+  2015.05.04 fixed bug
+   没有正确忽略编译目标目录下的文件
+###
+
 _fs = require 'fs'
 _fse = require 'fs-extra'
 _path = require 'path'
@@ -6,6 +11,8 @@ _sload = require 'sload'
 
 $config = SLOW.build
 $buildTarget = SLOW.build?.target
+
+$current = SLOW.cwd
 
 getModuleList = ->
   queue = []
@@ -27,11 +34,10 @@ prepareConfig = (config)->
 
 #忽略全局配置
 doBuildIgnore = (filename, buildFilename, next)->
+  return if _path.join($current, filename).indexOf($buildTarget) is 0
   return next filename, buildFilename if not $config.ignore
   rules = prepareConfig($config.ignore).include
   return for rule in rules when rule.test filename
-  return if filename.indexOf($buildTarget) is 0
-  return if filename.indexOf("/#{$buildTarget}") is 0
   next filename, buildFilename
 
 #copy

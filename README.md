@@ -209,6 +209,12 @@ more configure please see ```slow -h```
   MIT
 
 ## History
+
+v0.2.1beta2
+
+1. fixed a bug about compress ```.js``` and ```.css``` file,
+they will be compress in source file and replace source code when build.
+
 v0.2.1beta1
 
 1. add cjsx (coffee-react) support.

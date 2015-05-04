@@ -1,5 +1,8 @@
 ###
   文件操作相关
+
+  2015.05.04
+    增加一个函数 isAbsolute 判断是否为绝对路径
 ###
 _path = require 'path'
 _mime = require 'mime'
@@ -78,3 +81,6 @@ File.isFile = (pathName)->
   return false if not _fs.existsSync pathName
   state = _fs.statSync(pathName)
   state.isFile()
+
+File.isAbsolute = (path)->
+  _path.resolve(path) is _path.normalize(path).replace(/(.+)([\/|\\])$/, '$1')
