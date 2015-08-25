@@ -13,8 +13,8 @@ module.exports =
       ###
       #{
       # "path": /^\/api/ #需要进行代理的路径。支持正则
-      # "options":
-      #   "target": "http://localhost:8000" #demo
+      # "optigons":
+      #   "forward": "http://localhost:8000" #demo
       #}
       ###
     "error": #错误页面配置

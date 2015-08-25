@@ -2,13 +2,13 @@ _ = require 'lodash'
 #代理的相关配置
 proxySetting = SLOW.proxy
 
-_httpProxy = require('http-proxy').createProxyServer()
+_httpProxy = require('http-proxy').createProxyServer({})
 
 logProxyInfo = ()->
   return if not proxySetting
   queue = [].concat(proxySetting)
   for proxy in queue
-    proxyURL = proxy.options.target or proxy.option.forward
+    proxyURL = proxy.options.target or proxy.options.forward
     console.log "Server proxy #{proxy.path} to #{proxyURL}"
 
 logProxyInfo()

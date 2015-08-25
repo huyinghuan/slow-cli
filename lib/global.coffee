@@ -6,7 +6,7 @@ pkg =  _path.resolve __dirname, '../package.json'
 version = require(pkg).version
 
 $identity = ".slow"
-$identityFile = "config.js"
+$identityFile = "config"
 
 $identityFilePath = _path.join $identity, $identityFile
 
@@ -54,7 +54,7 @@ initRuntimeGlobalConfig = (program, setting)->
   runtimeConfigureFilePath = setting.runtimeConfigureFilePath
 
   #如果配置文件不存在，那么则表示运行的是 demo
-  if not _fs.existsSync runtimeConfigureFilePath
+  if not (_fs.existsSync("#{runtimeConfigureFilePath}.js") or _fs.existsSync("#{runtimeConfigureFilePath}.coffee"))
     #获取demo的文件夹
     runtimeDirectory = $defaultDemoDirectory
     #获取demo的配置文件
@@ -176,16 +176,16 @@ module.exports = (program)->
   #读取配置文件顺序, step 2
   #设置默认运行时配置文件路径
   $defaultRuntimeConfigureFilePath = _path.join runtimeDirectory, $identityFilePath
-
   #读取配置文件顺序, step 3
   #不需要init也能执行 如果执行执行目录下的配置文件不存在则读取默认配置
-  if not _fs.existsSync $defaultRuntimeConfigureFilePath
+  if not (_fs.existsSync("#{$defaultRuntimeConfigureFilePath}.js") or _fs.existsSync("#{$defaultRuntimeConfigureFilePath}.coffee"))
     $defaultRuntimeConfigureFilePath = $defaultConfigFilePath
+
 
   #获取实际运行时文件配置路径 如果指定了配置文件，那么使用配置文件，否则使用
   runtimeConfigureFilePath = runtimeConfigureFilePath or $defaultRuntimeConfigureFilePath
 
-  console.log "Now, project run with #{runtimeConfigureFilePath}"
+  console.log "Now, project run with #{runtimeConfigureFilePath}.(js|coffee)"
 
   setting =
     runtimeDirectory: runtimeDirectory

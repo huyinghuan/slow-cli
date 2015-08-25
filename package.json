@@ -42,7 +42,7 @@
     "fs-extra": "latest",
     "glob": "latest",
     "handlebars": "latest",
-    "http-proxy": "~1.7.3",
+    "http-proxy": "^1.11.1",
     "less": "~2.1.1",
     "less-plugin-autoprefix": "^1.3.0",
     "lodash": "latest",
@@ -52,9 +52,5 @@
     "sload": "latest",
     "socket.io": "~1.1.0",
     "uglify-js": "~2.4.15"
-  },
-  "scripts": {
-    "prepublish": "grunt",
-    "test": "grunt"
   }
 }

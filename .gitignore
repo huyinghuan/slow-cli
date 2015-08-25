@@ -2,9 +2,4 @@ logs
 *.log
 
 node_modules
-
 .idea
-lib
-sample
-!/src/lib
-!/src/sample
