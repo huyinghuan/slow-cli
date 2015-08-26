@@ -21,9 +21,9 @@ if isAutoPrefixer
 
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
-  mime = _mime.lookup(pathName)
-  #是否为css请求
-  return next() if mime isnt 'text/css'
+  #mime = _mime.lookup(pathName)
+  #mime bug /xx/css 应该是ostream 而不应该是text/css
+  return next() if not /(\.css|\.less)$/.test(pathName)
   filePath = _utils_file.getFilePath pathName
   #判断文件是否存在
   flag = _fs.existsSync filePath
