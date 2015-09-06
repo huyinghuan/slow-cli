@@ -21,7 +21,7 @@ if isAutoPrefixer
 
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
-  #mime = _mime.lookup(pathName)
+  mime = _mime.lookup(pathName)
   #mime bug /xx/css 应该是ostream 而不应该是text/css
   return next() if not /(\.css|\.less)$/.test(pathName)
   filePath = _utils_file.getFilePath pathName
