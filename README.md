@@ -231,3 +231,15 @@ grunt coffee
  1. 将集成我的另外一个库slow-data 进行api 数据模拟， 避免 后台开发延期导致前端 无法获取数据而造成的 任务进程停滞不前。
 
  2. 完成具体的插件机制， 增加更多可选插件。 比如文件合成等等
+
+
+## History
+
+v0.2.3
+
+  Support React jsx;
+  see the ```sample/index.jsx```. Demo: 
+```
+  slow sample
+```
+open the browser with 'http://localhost:3000/index.js'

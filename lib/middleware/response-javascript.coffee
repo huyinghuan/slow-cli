@@ -7,6 +7,7 @@ _fs = require 'fs'
 _async = require 'async'
 _coffee = require 'coffee-script'
 _cjsxTransform = require 'coffee-react-transform'
+_react_tools = require 'react-tools'
 
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
@@ -26,12 +27,19 @@ module.exports = (req, resp, next)->
   cjsxFilePath = filePath.replace(/(\.js)$/, '.cjsx')
   #如果文件不存在，替换成coffee继续尝试
   coffeeFilePath = filePath.replace(/(\.js)$/, '.coffee')
+  #如果文件不存在， 替换成jsx 继续尝试
+  jsxFilePath = filePath.replace(/(\.js)$/, '.jsx')
 
   if _fs.existsSync cjsxFilePath
     isCjsxFile = true
+    isCoffeeFile = true
     filePath = cjsxFilePath
   else if _fs.existsSync coffeeFilePath
     filePath = coffeeFilePath
+    isCoffeeFile = true
+  else if _fs.existsSync jsxFilePath
+    isJsxFile = true
+    filePath = jsxFilePath
   else #如果 coffee和cjsx 也不存在
     return next()
 
@@ -42,16 +50,41 @@ module.exports = (req, resp, next)->
     _fs.readFile filePath, encoding: 'utf8', (err, data)->
       cb err, data
 
-  #文件编译
-  queue.push (content, cb)->
+  #编译 jsx
+  queue.push((content, cb)->
+    return cb(null, content) if not isJsxFile
     error = null
     try
-      content = _cjsxTransform(content) if isCjsxFile
-      compiled = _coffee.compile content
+      content = _react_tools.transform(content)
     catch e
-      console.error e.toString()
+      console.log e.toString()
       error = e
-    cb error, compiled
+    cb(e, content)
+  )
+
+  #编译cjsx
+  queue.push((content, cb)->
+    return cb(null, content) if not isCjsxFile
+    error = null
+    try
+      content = _cjsxTransform(content)
+    catch e
+      console.log error.toString()
+      error = e
+    cb(error, content)
+  )
+
+  #编译 coffee
+  queue.push((content, cb)->
+    return cb(null, content) if not isCoffeeFile
+    error = null
+    try
+      content = _coffee.compile content
+    catch e
+      console.error e
+      error = e
+    cb error, content
+  )
 
   #请求响应
   _async.waterfall queue, (err, result)->

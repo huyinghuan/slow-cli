@@ -13,7 +13,7 @@ LessPluginAutoPrefix = require 'less-plugin-autoprefix'
 
 $cwd = SLOW.cwd
 
-isAutoPrefixer = SLOW.plugins.autoprefixer #是否增加浏览器兼容
+isAutoPrefixer = SLOW.plugins?.autoprefixer #是否增加浏览器兼容
 autoprefixPlugin = false
 if isAutoPrefixer
   options = if _.isPlainObject(isAutoPrefixer) then isAutoPrefixer else {}

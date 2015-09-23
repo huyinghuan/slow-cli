@@ -150,6 +150,7 @@ initBuildGlobalConfig = (program, setting)->
     cwd: compileDir
     build: buildConfigure
     plugins: buildConfigure.plugins
+    isProduct: -> true
 
 ###
 # slow start, slow build 读取配置文件的顺序是：
@@ -200,5 +201,5 @@ module.exports = (program)->
   else if program.sample
     initSampleGlobalConfig(program, setting)
   else
-    console.log "Command is undefined!"
+    console.log "Command is undefined! Please run 'slow -h' get help ".red
     process.exit 1
