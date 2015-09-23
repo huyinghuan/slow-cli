@@ -42,7 +42,7 @@ slow start
 ('-s, --source [value]', '构建项目时，指定 项目的文件夹路径')
 ('-o, --output [value]', '制定项目构建后的输出路径')
 ('-c, --configure [value]', '使用指定的slow 配置文件运行项目')
-('-b, --buildConfigure [value]', '使用指定的配置文件进行项目构建') 和-c功能一直, -b优先读取
+('-b, --buildConfigure [value]', '使用指定的配置文件进行项目构建') 和-c功能一致, -b优先读取
 ('-w, --workspace [value]', '指定运行时目录') 在build时候，功能和-s一致， 优先读取-s
 ```
 
@@ -110,7 +110,7 @@ import指令主要用于引用 css 和js 文件
 ```
 得到的结果是将文件夹css下的所有文件全部引入到head标签中。 不包括子文件夹。
 
-这个指令支持css和js文件资源的自动引入。 包括 less 和 coffee
+这个指令支持css和js文件资源的自动引入。 包括 less, coffee, cjsx和jsx
 
 #### watch_file
 
@@ -188,7 +188,7 @@ slow-test sample #运行demo
 
 ### 扩展
 
-SLOW 支持一定程度上的扩展。比如中间件方式等。只需要在src/lib/middleware 下添加服务相关格式的函数即可自动添加到运行环境中。
+SLOW 支持一定程度上的扩展。比如中间件方式等。只需要在lib/middleware 下添加服务相关格式的函数即可自动添加到运行环境中。
 比如 添加支持Sass支持。只需在该目录下添加个文件如 xxx-sass.coffee （如果你不用coffee那么，在lib/middleware下建立js文件即可）
 
 ```coffee
@@ -217,11 +217,6 @@ module.exports = (req, resp, next)->
   ...
   return resp.throwsServerError() if err
   resp.sendContent result, "text/css"
-```
-
-如果你使用的是coffee，那么需要目录下编译一次 (不是每个人都用coffee，编译好后，会自动生成到lib相应目录下，方便其他人使用)
-```
-grunt coffee
 ```
 
 例外还支持一些其他的扩展方式，如果有需要，可以在issue中提出，我会回复。
