@@ -1,283 +1,233 @@
+SLOW
+----------
+前端开发， 构建工具。
 
-#SLOW
+## 安装
 
-[TOC]
-
-# What is SLOW?
-
->SLOW is a web framework that help web developer focus on html,css,
->javascript and don't need care for server. You can develop web with LESS
->and Coffee and don't need compile them, SLOW will do them automatically.
->So you just need spend less time in work, coding slowly and thinking in coding,
->enjoy coding. Coding is not just for finish your work.
-
-#How to install?
-`slow` need be installed as global.
-`sudo npm install -g slow-cli`
-
-# Getting Start
-There is a slow project sample in "slow-cli/sample".
-
-## Init a slow project
 ```shell
-#In the project directory, get a slow project by runing
+npm install -g slow-cli coffee-script
+```
+
+##使用
+
+在项目根目录下运行
+```
 slow init
-```   
-    
+```
+进行初始化。 完成后会有相关配置 在.slow文件夹下生成。
+(当然也可以不进行初始化，这时使用默认配置运行）
 
-##Take over and starup a http server   
-```shell
-#In the project directory run.
+之后运行
+```
 slow start
-#And then open the browser with http://localhost:3000
-```    
-## Enjoy your develop!
-
-Now, you can enjoy coding with handlebar, coffeescript, less.
-don't need use grunt or gulp compile your project.
-
-#Develop with slow
-There are all configs for slow, every fields will be described in the
-next section. this is develop config:(you can find it in `.slow/config.js`)
-
-```   
-{
-	"environment": "develop",
-	"develop": {
-	  "port": 3000,
-	  "base": {
-	    "index": "index.html",
-	    "cache-time": 60 * 60 * 24 * 7,
-	    "gzip": true,
-	    "isWatchFile": true,
-	    "showResponseTime": true
-	  },
-	  "proxy": {
-	    "path": /^\/api/,
-	    "options": {
-	    "target": "http://localhost:8000"
-	  }
-	  },
-	  "error": {
-	    "403": ''
-	  },
-	  "log": {
-	    "log2console": true,
-	    "timestamp": false,
-	    "levelShow": true,
-	    "lineInfo": false,
-	    "log2file": false
-	  }
-}
 ```
-This is product config, you can find it in `.slow/product-config.js`
-it's same with develop config.
-```
-{
-  "port": 3000,
-  "base": {
-    "index": "index.html",
-    "cache-time": 60 * 60 * 24 * 7,
-    "gzip": true,
-    "isWatchFile": true,
-    "showResponseTime": false
-  },
-  "proxy": false,
-  "error": {
-    "403": ''
-  }
-}
-```
-This is build config. it be used when you run `slow build`
-you can modify in .slow/build.js
-```
- {
-   "target": "build",
-   "mincss": {
-     "include": /.+\.(less|css)$/,
-     "ignore": [/.+(\.min\.css)$/],
-     "options": {}
-   },
-   "minjs": {
-     "include": /.+\.(js|coffee)$/,
-     "ignore": [/.+(\.min\.js)$/],
-     "options": {
-       "mangle": false,
-       "compress": {}
-     }
-   },
-   "hbsCompile": {
-     "include": /.+(\.hbs)$/
-   },
-   "coffeeCompile": /.+(.coffee)$/,
-   "lessCompile": /.+(.less)$/,
-   "ignore": [/^(\.slow).+/, /.*(\.gitignore)$/]
- }
-```
-## Set work environment
+就可以跑起来了。 默认端口是3000.
 
-When we are developing a web project, we are in develop environment,
-so, at the first, you can setting slow work environment to be "develop"
-like this:
-```js
- module.export =
- {
-   "environment": "develop",
-   //...
- }
-```     
-There just are two values for `environment` option, `develop` and `product`.
-the default setting is "develop". the environment option tell `slow` which
-config should be load when it is working.
+## 配置
 
-## Config develop environment
-After set the work environment be `develop`, Now we can config the develop environment.
-There already has some default config option at ".slow/config.js". You define
-them by yourself in "develop" field.
+配置请参考 src/sample/.slow/config.coffee 配置
 
-### port
-the port that be `slow`used.default is `3000`.
-### base
-#### index
-#### cache-time
-#### gzip
-#### isWatchFile
-#### showResponseTime
-### proxy
-#### path
-#### options
-### error
-### log
-## Config product enviroment
-## Config build enviroment
-###target
-###mincss
-####include
-####ignore
-####options
-###minjs
-###hbscompile
-###cofeeCompile
-###lessComplie
-###ignore
-#HTML derective
-## include
-## import
-## watch_file
 
-#Slow extensions
+## Shell 命令
 
-#Shell
+### slow init
 
-##slow init
-##slow build
-##slow update
-##slow start
-for example:
+仅当你需要对该工程进行特殊配置时，才需要初始化。初始化slow 项目根目录运行一次即可
+
+### slow build
+将整个工程 进行构建。  构建完成后，不依赖slow， 可以通过nginx配置后，直接跑起来。当然， 如果你配置过
+路径代理， 那么nginx需要进行相应配置才行。
+可选参数：
 ```
-slow start -p [port]
-slow start -env [develop | product]
+('-s, --source [value]', '构建项目时，指定 项目的文件夹路径')
+('-o, --output [value]', '制定项目构建后的输出路径')
+('-c, --configure [value]', '使用指定的slow 配置文件运行项目')
+('-b, --buildConfigure [value]', '使用指定的配置文件进行项目构建') 和-c功能一直, -b优先读取
+('-w, --workspace [value]', '指定运行时目录') 在build时候，功能和-s一致， 优先读取-s
 ```
-more configure please see ```slow -h```
+
+### slow start
+
+将项目 运行在http 服务内（slow 自带）
+可选配置为： 
 
 ```
-  ('init', 'init a slow project')
-  ('-p, --port <n>', 'slow run in port <n>')
-  ('-e, --env [value]', 'the environment that slow working as develop or product')
-  ('-s, --source [value]', 'compile source directory')
-  ('-o, --output [value]', 'output directory after compiled')
-  ('-c, --configure [value]', 'the configure file')
-  ('-b, --buildConfigure [value]', 'the configure for build')
-  ('-w, --workspace [value]', 'the project workspace')
-  ('build', "build project as a web project and don't need depend on slow-cli anymore ")
-  ('start', 'start slow server')
-  ('update', 'update')`
+  ('-p, --port <n>', '指定运行端口') 默认为3000
+  ('-e, --env [value]', '指定运行时环境')#废弃
+  ('-c, --configure [value]', '使用指定的slow 配置文件运行项目')
+  ('-b, --buildConfigure [value]', '使用指定的配置文件进行项目构建')
+  ('-w, --workspace [value]', '指定运行时目录')
 ```
-# Feature
 
-1. support less
-2. support coffee-script
-3. support handlebar
-- support import directive
-- support include directive
-4. support http-proxy
-5. support file watch
-6. support gzip
+### slow sample
 
-# LICENCE
+运行demo. 可选配置为： 
 
-  MIT
+```
+('-p, --port <n>', '指定运行端口')
+```
 
-## History
+### 指令
 
-v0.2.1beta2
-
-1. fixed a bug about compress ```.js``` and ```.css``` file,
-they will be compress in source file and replace source code when build.
-
-v0.2.1beta1
-
-1. add cjsx (coffee-react) support.
-  you can use ```.cjsx``` as file's ext  for compile CJSX
-
-v0.2.0beta1
-1. add more runtime and build options.
-
-v0.1.9beta5
-
-1. finish function #9 . Reload css, image file without refresh page when watch file chage. 
-(only support file from directive ```import``` or tag.  the assets in direcive
-```include``` don't support)
-
-v0.1.9beta3
-
-1. fix bug that can not build project less.
-2. modify the start way from ```slow``` to ```slow start```. Avoid conflict with other shell commander
-
-v0.1.9beta1
-
-1. catch the error when compile  coffeescript and hbs file. avoid the ```slow``` crash.
-
-v0.1.8beta6
-
-1. support proxy multipath
-
-v0.1.8beta3
-
-1. update command ```init```
-
-v0.1.8-beta1
-
-1. add shell ```slow build``` package slow project to a pure html project.
-Don't need depend ```slow```
-
->slow build support:
->1. autocompile coffee, less, handlebar
->2. compress js, css to min file
+仅在```.hbs``` 文件中支持 include 和import 指令。 html文件不支持。 这点主要是考虑到某些前端mvc框架如angularjs
+有自己的模板引擎，其中的引用符号会有冲突，导致无法正确解析文件。
 
 
-v0.1.7
+#### include
 
-1. fix a bug that slow-cli crash when proxy config don't exists
-2. add log config in config.js. more config see [log4slow](http://github.com/huyinghuan/log4slow)
-3. add build project optional.(doing. it will publish in v0.1.8)
+将其他文件包含进来。 例如
+a.html
+```
+<div>hello world</div>
+```
 
-v0.1.6
+b.hbs
+```
+<body>
+{{include "a.html"}}
+</body>
+```
 
-1. fix a bug about issue #1
+编译后（在浏览器访问 localhost:xxx/xx/b.html）
+得到的结果是
 
-v0.1.4
+```
+<body>
+  <div>hello world</div>
+</body>
+```
 
-1. exchange ```import``` and ```include``` function
+#### import
 
-v0.1.3
+import指令主要用于引用 css 和js 文件
 
-1. fix some bugs.
+例如
 
-v0.1.1
+```
+<head>
+{{import "css/*"}}
+</head>
+```
+得到的结果是将文件夹css下的所有文件全部引入到head标签中。 不包括子文件夹。
 
-1. update README.md and fix bug can not install 
+这个指令支持css和js文件资源的自动引入。 包括 less 和 coffee
 
-v0.1.0
+#### watch_file
 
-1. finish basic function
+watch_file 指令使用来 监测 文件变化 从而自动刷新浏览器的。也就是 livereload功能。
+
+在你需要的自动刷新的页面加上 指令 {{watch_file}} 即可。
+
+> Note： 该指令在slow build 会自动忽略不会引用到正式文件里面去。
+
+### proxy代理
+
+解决跨域问题。  在前后端分离的趋势下， 前段 不依赖后台服务器  进行api访问。
+
+如果直接访问api 会造成 跨域 限制。 通过proxy 配置，跨域解决这个问题，
+支持多路径 代理。 具体参考配置文件```src/sample/.slow/config.coffee``` 的proxy相关设置。
+
+### 其他
+
+支持 coffee，less原生编译， 也就是如果你是通过 coffee写的文件 ，按照 .js文件的方法引用即可
+
+如： a.coffee 在引用时 写成```<script src="xx/a.js"></script>```即可。less同理。
+
+### 自己扩展slow-cli
+
+#### 假如你不会coffee:
+clone到项目本地后, 进入项目目录运行
+```
+npm install
+npm test
+```
+这样就编译完成slow-cli．
+
+然后在lib目录下编写代码即可．
+
+如何测试本版本？
+
+
+在本地任何一个目录新建一个软连接到```path/to/slow-cli/bin/index```,然后把该目录设置到环境变量里面.
+就可以测试使用slow-cli了．
+
+```
+cd /envirmoent/to/path/
+cp -s path/to/slow-cli/bin/index slow-test
+slow sample #运行demo
+```
+#### 假如你会coffee
+
+clone到项目本地后, 进入项目目录运行
+```
+npm install
+```
+修改 ```/path/to/slow-cli/bin/index```
+为
+```
+#!/usr/bin/env node
+require('../src/lib/index')
+```
+即可．然后在src/lib下编写代码．
+
+如何测试本版本？
+
+
+在本地任何一个目录新建一个软连接到```path/to/slow-cli/bin/index```,然后把该目录设置到环境变量里面.
+就可以测试使用slow-cli了．
+
+```
+cd /envirmoent/to/path/
+cp -s path/to/slow-cli/bin/index slow-test
+slow-test sample #运行demo
+```
+
+### Bug 与 Suggestion
+
+可以提issue 或者 pr
+
+### 扩展
+
+SLOW 支持一定程度上的扩展。比如中间件方式等。只需要在src/lib/middleware 下添加服务相关格式的函数即可自动添加到运行环境中。
+比如 添加支持Sass支持。只需在该目录下添加个文件如 xxx-sass.coffee （如果你不用coffee那么，在lib/middleware下建立js文件即可）
+
+```coffee
+_async = require 'async'
+
+isSassFile = (path)->
+   if ....
+      return true
+
+   else
+      return false
+
+module.exports = (req, resp, next)->
+  pathName = req.client.pathName
+
+  if not isSassFile(pathName) #如果pathName 不是 sass文件类型 #伪代码
+      return next() #当请求路径不符合你的拦截请求的话，运行next()  将请求交给下个 拦截器
+
+  ....
+  err = null
+  #编译 sass文件
+  try
+    result = _sass.compile .....
+  catch e
+    err = e
+  ...
+  return resp.throwsServerError() if err
+  resp.sendContent result, "text/css"
+```
+
+如果你使用的是coffee，那么需要目录下编译一次 (不是每个人都用coffee，编译好后，会自动生成到lib相应目录下，方便其他人使用)
+```
+grunt coffee
+```
+
+例外还支持一些其他的扩展方式，如果有需要，可以在issue中提出，我会回复。
+
+## 未来
+
+ 1. 将集成我的另外一个库slow-data 进行api 数据模拟， 避免 后台开发延期导致前端 无法获取数据而造成的 任务进程停滞不前。
+
+ 2. 完成具体的插件机制， 增加更多可选插件。 比如文件合成等等

@@ -7,5 +7,11 @@ module.exports = (program, next)->
 
  # _fse.ensureFileSync SLOW.$currentDefaultConfigFilePath
   #copy配置文件
-  _fse.copySync SLOW.$defaultConfigDirectoryPath, SLOW.$currentDefaultConfigDirectoryPath
-  process.exit 1
+  _fse.copy(SLOW.$defaultConfigDirectoryPath, SLOW.$currentDefaultConfigDirectoryPath, (err)->
+    if err
+      console.log "Init project failed".red
+    else
+      console.log "Init project success".green
+    process.exit 1
+  )
+

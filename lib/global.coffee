@@ -65,6 +65,8 @@ initRuntimeGlobalConfig = (program, setting)->
       "or set the project directory by 'slow -w path/to/project' \n" +
       "more information run 'slow -h'".yellow
 
+  console.log "Now, project run with #{setting.runtimeConfigureFilePath}.(js|coffee)"
+
   console.log "slow run in #{runtimeDirectory}".blue
 
   config = require runtimeConfigureFilePath
@@ -185,8 +187,6 @@ module.exports = (program)->
   #获取实际运行时文件配置路径 如果指定了配置文件，那么使用配置文件，否则使用
   runtimeConfigureFilePath = runtimeConfigureFilePath or $defaultRuntimeConfigureFilePath
 
-  console.log "Now, project run with #{runtimeConfigureFilePath}.(js|coffee)"
-
   setting =
     runtimeDirectory: runtimeDirectory
     runtimeConfigureFilePath: runtimeConfigureFilePath
@@ -199,3 +199,6 @@ module.exports = (program)->
     initBuildGlobalConfig(program, setting)
   else if program.sample
     initSampleGlobalConfig(program, setting)
+  else
+    console.log "Command is undefined!"
+    process.exit 1
