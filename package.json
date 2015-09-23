@@ -49,6 +49,7 @@
     "log4slow": "0.1.0",
     "mime": "~1.2.11",
     "path-judge": "0.0.2",
+    "react-tools": "^0.13.3",
     "sload": "latest",
     "socket.io": "~1.1.0",
     "uglify-js": "~2.4.15"
