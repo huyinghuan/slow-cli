@@ -39,6 +39,8 @@ module.exports = (filename, buildFilename, next)->
     queue.push (content, cb)->
       _less.render(content, cssParserOption).then((output)->
         cb(null, output.css)
+      ).catch((e)->
+        cb(e)
       )
 
     queue.push (css, cb)->
@@ -46,8 +48,8 @@ module.exports = (filename, buildFilename, next)->
         cb(err)
 
     _async.waterfall(queue, (err)->
-      console.error err if err
-      next filename, buildTargetFilePath if not err
+      return console.error("Less parse error: #{filename} \n".red, err) if err
+      next filename, buildTargetFilePath
     )
 
   _doBuildCommon filename, buildFilename, 'lessCompile', next, factory

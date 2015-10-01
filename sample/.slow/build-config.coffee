@@ -32,6 +32,6 @@ module.exports =
   "lessCompile": /.+(.less)$/
   "reactCompile": /.+(.jsx)$/
   #被直接忽视的文件， 不会进入文件处理，也不会被拷贝
-  "ignore": [/^(\.slow).+/, /.*(\.gitignore)$/, /^\..+/] #表达式数组或者单个表达式
+  "ignore": [/^(\.slow).+/, /.*(\.gitignore)$/, /^\..+/, /.*(\/|\\)?(modules)(\/|\\){1}.*/] #表达式数组或者单个表达式
   "plugins":
     "autoprefixer": browsers: ["last 2 versions"]#自动加css前缀

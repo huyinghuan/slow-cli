@@ -38,6 +38,7 @@ slow start
 将整个工程 进行构建。  构建完成后，不依赖slow， 可以通过nginx配置后，直接跑起来。当然， 如果你配置过
 路径代理， 那么nginx需要进行相应配置才行。
 可选参数：
+
 ```
 ('-s, --source [value]', '构建项目时，指定 项目的文件夹路径')
 ('-o, --output [value]', '制定项目构建后的输出路径')
@@ -45,6 +46,27 @@ slow start
 ('-b, --buildConfigure [value]', '使用指定的配置文件进行项目构建') 和-c功能一致, -b优先读取
 ('-w, --workspace [value]', '指定运行时目录') 在build时候，功能和-s一致， 优先读取-s
 ```
+
+*** 注意 ***
+所有的modules文件夹下的文件都不会被编译。也就是你所有被包含的组件应该放在modules文件夹下面。
+如 
+a.less
+```
+body{
+  color:xxx
+}
+```
+index.less
+```
+@import 'a.less'
+xxxx
+```
+
+如果你的a.less仅是作为被引用而存在（作为一个模块），那么a.less最好放在modules目录下面，这样在build的时候就不会出现
+在打包文件中了。
+当然 如果a.less也作为独立文件被引用，那么它不放在modules文件夹项目。 类似，hbs文件处理也遵循该规则。
+
+Note: 如果你需要修改该规则，那么可以在项目的.slow/build-config中ignore字段进行修改
 
 ### slow start
 
@@ -229,6 +251,11 @@ module.exports = (req, resp, next)->
 
 
 ## History
+v0.2.4
+
+  1. 增加默认忽略配置
+  2. 修复一个build过程中读取错误的配置文件bug
+  3. 修复查看文件夹目录，浏览该目录下文件时，文件是下载动作而非正确打开的bug
 
 v0.2.3
 

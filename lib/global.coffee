@@ -107,14 +107,12 @@ initBuildGlobalConfig = (program, setting)->
   #2.获取编译配置
   #3.获取编输出文件夹
   #4.设置全局变量
-
+  console.log
   #1.获取需要编译的文件夹
-
   if program.source
     compileDir =  _pathJudge.getFilePathBaseOnProcess(program.source)
   else
     compileDir = setting.runtimeDirectory
-
   #2.获取编译配置
   #是否已经指定编译配置文件
   if program.buildConfigure
@@ -123,14 +121,10 @@ initBuildGlobalConfig = (program, setting)->
   else if program.configure
     buildConfigureFile = _pathJudge.getFilePathBaseOnProcess program.configure
   #是否工作目录下已经包好了配置文件
-  else if _fs.existsSync(currentConfigureFilePath = _path.join(compileDir, $identityFilePath))
-    buildConfigureFile = currentConfigureFilePath
-  #读取默认配置
   else
-    buildConfigureFile = $defaultConfigFilePath
+    buildConfigureFile = setting.runtimeConfigureFilePath
 
   configure = require(buildConfigureFile)
-
   buildConfigure = configure.build or configure
 
   #获取编输出文件夹
@@ -175,7 +169,6 @@ module.exports = (program)->
 
   #读取工作目录 如果指定了项目目录，则使用指定目录，如果没有指定则使用主进程目录
   runtimeDirectory = runtimeDirectory or $defaultRuntimeDirectory
-
   #读取配置文件顺序, step 2
   #设置默认运行时配置文件路径
   $defaultRuntimeConfigureFilePath = _path.join runtimeDirectory, $identityFilePath
@@ -184,10 +177,8 @@ module.exports = (program)->
   if not (_fs.existsSync("#{$defaultRuntimeConfigureFilePath}.js") or _fs.existsSync("#{$defaultRuntimeConfigureFilePath}.coffee"))
     $defaultRuntimeConfigureFilePath = $defaultConfigFilePath
 
-
   #获取实际运行时文件配置路径 如果指定了配置文件，那么使用配置文件，否则使用
   runtimeConfigureFilePath = runtimeConfigureFilePath or $defaultRuntimeConfigureFilePath
-
   setting =
     runtimeDirectory: runtimeDirectory
     runtimeConfigureFilePath: runtimeConfigureFilePath
