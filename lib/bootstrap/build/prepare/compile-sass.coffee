@@ -1,17 +1,18 @@
 _path = require 'path'
-_less = require 'less'
 _fse = require 'fs-extra'
 _async = require 'async'
-_lessCompile = sload 'compile/less'
 _utils_file = sload 'utils/file'
-_doBuildCommon = sload('bootstrap/build/index').doBuildCommon
+_sassCompile = sload 'compile/sass'
 
-$buildTarget = SLOW.build.target
+_doBuildCommon = sload('bootstrap/build/index').doBuildCommon
 $cwd = SLOW.cwd
+$buildTarget = SLOW.build.target
+
+
 #编译less
 module.exports = (filename, buildFilename, next)->
   factory = (filename)->
-    console.log "less parse #{filename}"
+    console.log "Sass parse #{filename}"
     buildTargetFilename = _utils_file.replaceFileExt filename, "css"
     buildTargetFilePath = _path.join $buildTarget, buildTargetFilename
     _fse.ensureFileSync buildTargetFilePath
@@ -19,7 +20,7 @@ module.exports = (filename, buildFilename, next)->
     queue = []
     filePath = _path.join $cwd, filename
     queue.push (cb)->
-      _lessCompile(filePath, (err, result)-> cb(err, result))
+      _sassCompile(filePath, (err, result)-> cb(err, result))
 
     queue.push (css, cb)->
       _fse.outputFile buildTargetFilePath, css, (err)-> cb(err)
@@ -29,4 +30,4 @@ module.exports = (filename, buildFilename, next)->
       next filename, buildTargetFilePath
     )
 
-  _doBuildCommon filename, buildFilename, 'lessCompile', next, factory
+  _doBuildCommon filename, buildFilename, 'sassCompile', next, factory
