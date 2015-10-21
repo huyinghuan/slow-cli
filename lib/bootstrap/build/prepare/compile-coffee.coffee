@@ -1,10 +1,9 @@
 #编译coffee
 _path = require 'path'
-_coffee = require 'coffee-script'
 _fse = require 'fs-extra'
 _fs = require 'fs'
-_cjsxTransform = require 'coffee-react-transform'
-
+_async = require 'async'
+_coffeeCompile = sload 'compile/coffee'
 _utils_file = sload 'utils/file'
 _doBuildCommon = sload('bootstrap/build/index').doBuildCommon
 $cwd = SLOW.cwd
@@ -16,11 +15,18 @@ module.exports = (filename, buildFilename, next)->
     buildTargetFilename = _utils_file.replaceFileExt filename, "js"
     buildTargetFilePath = _path.join $buildTarget, buildTargetFilename
     _fse.ensureFileSync buildTargetFilePath
-    content = _fs.readFileSync _path.join($cwd, filename), encoding: "utf8"
 
-    #判断是否为cjsx文件
-    content = _cjsxTransform(content) if /.+(\.cjsx)$/.test(filename)
+    queue = []
+    filePath = _path.join $cwd, filename
+    queue.push (cb)->
+      _coffeeCompile(filePath, (err, result)-> cb(err, result))
 
-    _fse.outputFileSync buildTargetFilePath, _coffee.compile content
-    next filename, buildTargetFilePath
+    queue.push (content, cb)->
+      _fse.outputFile buildTargetFilePath, content, (err)-> cb(err)
+
+    _async.waterfall(queue, (err)->
+      return process.exit(1) if err
+      next filename, buildTargetFilePath
+    )
+
   _doBuildCommon filename, buildFilename, 'coffeeCompile', next, factory

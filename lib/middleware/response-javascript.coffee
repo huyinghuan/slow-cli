@@ -5,9 +5,10 @@ _mime = require 'mime'
 _utils_file = sload 'utils/file'
 _fs = require 'fs'
 _async = require 'async'
-_coffee = require 'coffee-script'
-_cjsxTransform = require 'coffee-react-transform'
-_react_tools = require 'react-tools'
+
+_coffeeCompile = sload 'compile/coffee'
+_cjsxCompile = sload 'compile/cjsx'
+_jsxCompile = sload 'compile/react-jsx'
 
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
@@ -29,64 +30,18 @@ module.exports = (req, resp, next)->
   coffeeFilePath = filePath.replace(/(\.js)$/, '.coffee')
   #如果文件不存在， 替换成jsx 继续尝试
   jsxFilePath = filePath.replace(/(\.js)$/, '.jsx')
-
-  if _fs.existsSync cjsxFilePath
-    isCjsxFile = true
-    isCoffeeFile = true
-    filePath = cjsxFilePath
-  else if _fs.existsSync coffeeFilePath
-    filePath = coffeeFilePath
-    isCoffeeFile = true
-  else if _fs.existsSync jsxFilePath
-    isJsxFile = true
-    filePath = jsxFilePath
+  compile = null
+  fileRealPath = ""
+  if _fs.existsSync(fileRealPath = cjsxFilePath)
+    compile = _cjsxCompile
+  else if _fs.existsSync(fileRealPath = coffeeFilePath)
+    compile = _coffeeCompile
+  else if _fs.existsSync(fileRealPath = jsxFilePath)
+    compile = _jsxCompile
   else #如果 coffee和cjsx 也不存在
     return next()
 
-  queue = []
-
-  #读取文件
-  queue.push (cb)->
-    _fs.readFile filePath, encoding: 'utf8', (err, data)->
-      cb err, data
-
-  #编译 jsx
-  queue.push((content, cb)->
-    return cb(null, content) if not isJsxFile
-    error = null
-    try
-      content = _react_tools.transform(content)
-    catch e
-      console.log e.toString()
-      error = e
-    cb(e, content)
-  )
-
-  #编译cjsx
-  queue.push((content, cb)->
-    return cb(null, content) if not isCjsxFile
-    error = null
-    try
-      content = _cjsxTransform(content)
-    catch e
-      console.log error.toString()
-      error = e
-    cb(error, content)
-  )
-
-  #编译 coffee
-  queue.push((content, cb)->
-    return cb(null, content) if not isCoffeeFile
-    error = null
-    try
-      content = _coffee.compile content
-    catch e
-      console.error e
-      error = e
-    cb error, content
-  )
-
-  #请求响应
-  _async.waterfall queue, (err, result)->
+  compile(fileRealPath, (err, content)->
     return resp.throwsServerError() if err
-    resp.sendContent result, mime
+    resp.sendContent content, mime
+  )

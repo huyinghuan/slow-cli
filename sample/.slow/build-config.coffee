@@ -28,10 +28,11 @@ module.exports =
       "compress": {} #see http://lisperator.net/uglifyjs/compress
   "hbsCompile":
     "include": /.+(\.hbs)$/ #需要进行complie的文件
-  "coffeeCompile": /.+(.coffee|.cjsx)$/
-  "lessCompile": /.+(.less)$/
-  "reactCompile": /.+(.jsx)$/
-  "sassCompile": /.+(.scss)$/
+  "coffeeCompile": /.+(\.coffee)$/
+  "lessCompile": /.+(\.less)$/
+  "reactCompile": /.+(\.jsx)$/
+  "sassCompile": /.+(\.scss)$/
+  "cjsxCompile": /.+(\.cjsx)$/
   #被直接忽视的文件， 不会进入文件处理，也不会被拷贝
   "ignore": [/^(\.slow).+/, /.*(\.gitignore)$/, /^\..+/, /.*(\/|\\)?(modules)(\/|\\){1}.*/] #表达式数组或者单个表达式
   "plugins":

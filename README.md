@@ -254,7 +254,7 @@ module.exports = (req, resp, next)->
 v0.2.6
   
   1.增加 sass支持
-  2.重构编译less, sass逻辑．避免重复代码
+  2.重构编译less, sass, coffee, cjsx, jsx逻辑．避免重复代码
 
 v0.2.5
 
