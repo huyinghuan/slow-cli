@@ -21,11 +21,10 @@ getProxyURL = (pathName)->
     queue = proxySetting
 
   for proxy in queue
-    if proxy.path.test pathName
-      return proxy
+    path = [].concat(proxy.path)
+    return proxy for needProxyPath in path when needProxyPath.test pathName
 
   return false
-
 
 module.exports = (req, resp, next)->
   pathName = req.client.pathName
@@ -36,7 +35,7 @@ module.exports = (req, resp, next)->
   return next() if proxy is false
   proxyURL =  proxy.options.target or proxy.options.forward
 
-  console.log "#{pathName} #{req.method} -> #{proxyURL}"
+  console.log "proxy #{pathName} #{req.method} -> #{proxyURL}".blue
 
   _httpProxy.web(req, resp, proxy.options, (e)->
     resp.throwsServerError()
