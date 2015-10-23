@@ -1,6 +1,7 @@
 #编译 React *.jsx
 _path = require 'path'
 _fse = require 'fs-extra'
+_async = require 'async'
 _compile = sload 'compile/react-jsx'
 _utils_file = sload 'utils/file'
 _doBuildCommon = sload('bootstrap/build/index').doBuildCommon
