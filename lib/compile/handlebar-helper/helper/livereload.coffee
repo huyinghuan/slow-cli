@@ -1,3 +1,5 @@
+template =
+'''
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io(window.location.origin);
@@ -50,3 +52,10 @@
         }
       }
     </script>
+'''
+
+
+module.exports = (Handlebars)->
+  helpName = 'livereload'
+  Handlebars.unregisterHelper helpName
+  Handlebars.registerHelper helpName, -> new Handlebars.SafeString template
