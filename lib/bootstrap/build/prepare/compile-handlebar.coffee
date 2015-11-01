@@ -1,7 +1,7 @@
 _path = require 'path'
-_handlebar = sload 'utils/handlebar'
 _fse = require 'fs-extra'
 _utils_file = sload 'utils/file'
+_HandlebarCompile = sload 'compile/handlebar'
 _doBuildCommon = sload('bootstrap/build/index').doBuildCommon
 $cwd = SLOW.cwd
 $buildTarget = SLOW.build.target
@@ -14,7 +14,18 @@ module.exports = (filename, buildFilename, next)->
     buildTargetFilePath = _path.join $buildTarget, buildTargetFilename
     #自动生成文件目录
     _fse.ensureFileSync buildTargetFilePath
-    content = _handlebar.compileFileSync _path.join($cwd, filename)
-    _fse.outputFileSync buildTargetFilePath, content
-    next filename, buildTargetFilePath
+
+    queue = []
+    filePath = _path.join $cwd, filename
+    queue.push (cb)->
+      _HandlebarCompile(filePath, (err, result)-> cb(err, result))
+
+    queue.push (content, cb)->
+      _fse.outputFile buildTargetFilePath, content, (err)-> cb(err)
+
+    _async.waterfall(queue, (err)->
+      return process.exit(1) if err
+      next filename, buildTargetFilePath
+    )
+
   _doBuildCommon filename, buildFilename, 'hbsCompile', next, factory

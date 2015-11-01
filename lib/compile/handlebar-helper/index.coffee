@@ -4,6 +4,7 @@ _helperPath = _path.join(__dirname, "helper")
 #扫描handlebar help 所有插件
 _straps = _sload.scan(_helperPath)
 
+#加载自定义组件
 loadAllCompileHelpers = (filePath, context)->
   for helper in _straps
     break if not helper

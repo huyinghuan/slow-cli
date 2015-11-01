@@ -1,5 +1,6 @@
 _async = require 'async'
 _fs = require 'fs'
+_Compiler = require './handlebar-helper/index'
 
 module.exports = (realFilePath, cb)->
   queue = []
