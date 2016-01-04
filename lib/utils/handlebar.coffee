@@ -53,11 +53,11 @@ getTemplateContent = (fileName, context = {})->
 getTemplateHandlebarContent = (fileName, context = {})->
   return new _Handlebars.SafeString getTemplateContent fileName, context
 
-#文件监视器
-_Handlebars.registerHelper 'watch_file', ()->
-  #如果是生产环境则返回空
-  return '' if SLOW.isProduct()
-  getTemplateHandlebarContent "watch-file.html"
+##文件监视器
+#_Handlebars.registerHelper 'watch_file', ()->
+#  #如果是生产环境则返回空
+#  return '' if SLOW.isProduct()
+#  getTemplateHandlebarContent "watch-file.html"
 
 #html 文件引用
 _Handlebars.registerHelper 'include', (filePath)->
